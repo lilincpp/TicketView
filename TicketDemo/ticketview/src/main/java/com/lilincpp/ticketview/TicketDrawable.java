@@ -1,21 +1,21 @@
 package com.lilincpp.ticketview;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Xfermode;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 
 /**
- * Created by Administrator on 2018/1/4.
+ * Created by lilin on 2018/1/4.
  */
 
 public abstract class TicketDrawable extends Drawable {
 
+    private static final String TAG = "TicketDrawable";
 
     private Drawable mBackground;//原背景
     private Paint mPaint;
@@ -23,22 +23,23 @@ public abstract class TicketDrawable extends Drawable {
     public TicketDrawable(Drawable background) {
         mBackground = background;
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaint.setColor(Color.WHITE);
     }
 
     @Override
     public void draw(Canvas canvas) {
         if (mBackground != null && canvas != null) {
+            mBackground.setBounds(getBounds());//在draw()方法前，必须调用该方法-设置其边界范围
             int layerId = canvas.saveLayer(0, 0, canvas.getWidth(), canvas.getHeight(), mPaint, Canvas.ALL_SAVE_FLAG);
             mBackground.draw(canvas);
-            mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
             //绘制目标形状
             drawTargetShape(canvas, mPaint);
-            mPaint.setXfermode(null);
             canvas.restoreToCount(layerId);
         }
     }
 
     public abstract void drawTargetShape(Canvas canvas, Paint paint);
+
 
     public void setBackground(Drawable background) {
         mBackground = background;
