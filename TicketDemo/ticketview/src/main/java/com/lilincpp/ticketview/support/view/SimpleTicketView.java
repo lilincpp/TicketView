@@ -2,25 +2,22 @@ package com.lilincpp.ticketview.support.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Path;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.lilincpp.ticketview.IDividingLineShape;
 import com.lilincpp.ticketview.TicketParam;
-import com.lilincpp.ticketview.support.shape.RoundBoundaryShape;
+import com.lilincpp.ticketview.support.shape.RoundShape;
 import com.lilincpp.ticketview.support.drawable.SimpleTicketDrawable;
 
 /**
- * Created by Administrator on 2018/1/5.
+ * Created by colin on 2018/1/5.
  */
 
 public class SimpleTicketView extends FrameLayout {
-    private static final String TAG = "SimpleTicketLinearLayou";
+    private static final String TAG = "SimpleTicketView";
+
     public SimpleTicketView(Context context) {
         super(context);
         initView();
@@ -38,8 +35,8 @@ public class SimpleTicketView extends FrameLayout {
 
     private void initView() {
         SimpleTicketDrawable.Builder builder = new SimpleTicketDrawable.Builder(getBackground());
-        RoundBoundaryShape leftAndRight = new RoundBoundaryShape();
-        RoundBoundaryShape topAndBottom = new RoundBoundaryShape();
+        RoundShape leftAndRight = new RoundShape();
+        RoundShape topAndBottom = new RoundShape();
         topAndBottom.setRadius(leftAndRight.getRadius() * 4);
         topAndBottom.setStartDrawGravity(TicketParam.DrawGravity.CENTER);
         topAndBottom.setQuantity(1);
@@ -56,11 +53,17 @@ public class SimpleTicketView extends FrameLayout {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        //绘制线
         for (int i = 0; i < getChildCount(); ++i) {
             final View child = getChildAt(i);
             if (child != null && child instanceof IDividingLineShape) {
                 ((IDividingLineShape) child).drawLine(canvas);
             }
         }
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        setMeasuredDimension(0, 0);
     }
 }

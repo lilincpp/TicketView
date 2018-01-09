@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="SimpleTicketDividingLine">
+        <!--虚线的方向-->
         <attr name="line_gravity">
             <flag name="vertical" value="0" />
             <flag name="horizontal" value="1" />
         </attr>
+        <!--虚线绘制的位置（百分比）-->
         <attr name="line_drawWeight" format="float" />
+        <!--虚线的颜色-->
         <attr name="line_color" format="color" />
+        <!--虚线与边的距离-->
         <attr name="line_padding" format="dimension" />
+        <!--虚线的宽度-->
         <attr name="line_width" format="dimension" />
+        <!--虚线的间距-->
         <attr name="line_gap" format="dimension" />
     </declare-styleable>
 </resources>

@@ -5,10 +5,10 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 /**
- * Created by Administrator on 2018/1/5.
+ * Created by colin on 2018/1/5.
  */
 
-public interface IBoundaryShape {
+public interface IShape {
 
     void draw(Canvas canvas, Paint paint);
 

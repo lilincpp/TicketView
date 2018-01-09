@@ -5,12 +5,15 @@ import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 
 /**
- * Created by lilin on 2018/1/4.
+ * Created by colin on 2018/1/4.
+ * <p>
+ * 如果需要
  */
 
 public abstract class TicketDrawable extends Drawable {
@@ -21,6 +24,9 @@ public abstract class TicketDrawable extends Drawable {
     private Paint mPaint;
 
     public TicketDrawable(Drawable background) {
+        if (background == null) {
+            background = new ColorDrawable(Color.WHITE);
+        }
         mBackground = background;
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setColor(Color.WHITE);
@@ -38,6 +44,12 @@ public abstract class TicketDrawable extends Drawable {
         }
     }
 
+    /**
+     * 绘制任何你想要的形状，并且你可以通过为Paint设置{@link android.graphics.PorterDuff.Mode}来达到你想要的效果
+     *
+     * @param canvas
+     * @param paint
+     */
     public abstract void drawTargetShape(Canvas canvas, Paint paint);
 
 

@@ -18,7 +18,7 @@ import com.lilincpp.ticketview.IDividingLineShape;
 import com.lilincpp.ticketview.R;
 
 /**
- * Created by Administrator on 2018/1/9.
+ * Created by colin on 2018/1/9.
  */
 
 public class SimpleTicketDividingLine extends View implements IDividingLineShape {

@@ -7,14 +7,13 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 
-import com.lilincpp.ticketview.IBoundaryShape;
+import com.lilincpp.ticketview.IShape;
 import com.lilincpp.ticketview.TicketDrawable;
 import com.lilincpp.ticketview.TicketParam;
 
 /**
- * Created by Administrator on 2018/1/4.
+ * Created by colin on 2018/1/4.
  */
 
 public class SimpleTicketDrawable extends TicketDrawable {
@@ -25,7 +24,7 @@ public class SimpleTicketDrawable extends TicketDrawable {
     private static final int TOP_BOUNDARY_SHAPE_INDEX = 1;
     private static final int RIGHT_BOUNDARY_SHAPE_INDEX = 2;
     private static final int BOTTOM_BOUNDARY_SHAPE_INDEX = 3;
-    private IBoundaryShape[] mBoundaryShapes;
+    private IShape[] mBoundaryShapes;
     private Paint mShapePaint;
 
     private SimpleTicketDrawable(SimpleTicketDrawable.Builder builder) {
@@ -35,7 +34,7 @@ public class SimpleTicketDrawable extends TicketDrawable {
         mShapePaint.setColor(Color.WHITE);
     }
 
-    public Bitmap getShape(IBoundaryShape shape) {
+    public Bitmap getShape(IShape shape) {
         Bitmap bitmap = Bitmap.createBitmap(shape.getWidth(), shape.getHeight(), Bitmap.Config.ARGB_8888);
         shape.draw(new Canvas(bitmap), mShapePaint);
         return bitmap;
@@ -43,10 +42,11 @@ public class SimpleTicketDrawable extends TicketDrawable {
 
     @Override
     public void drawTargetShape(Canvas canvas, Paint paint) {
+        //设置画笔的模式，占位模式（直接将目标像素变为透明）
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
 
         for (int i = 0; i < mBoundaryShapes.length; ++i) {
-            final IBoundaryShape shape = mBoundaryShapes[i];
+            final IShape shape = mBoundaryShapes[i];
             if (shape == null) continue;
             switch (i) {
                 case LEFT_BOUNDARY_SHAPE_INDEX:
@@ -67,7 +67,7 @@ public class SimpleTicketDrawable extends TicketDrawable {
     }
 
 
-    protected void drawLeft(Canvas canvas, Paint paint, IBoundaryShape shape) {
+    protected void drawLeft(Canvas canvas, Paint paint, IShape shape) {
         final Bitmap drawShape = getShape(shape);
         float y = shape.getDividingSpace();
         if (shape.getStartDrawGravity() == TicketParam.DrawGravity.CENTER) {
@@ -82,7 +82,7 @@ public class SimpleTicketDrawable extends TicketDrawable {
         drawShape.recycle();
     }
 
-    protected void drawTop(Canvas canvas, Paint paint, IBoundaryShape shape) {
+    protected void drawTop(Canvas canvas, Paint paint, IShape shape) {
         final Bitmap drawShape = getShape(shape);
         float x = shape.getDividingSpace();
         if (shape.getStartDrawGravity() == TicketParam.DrawGravity.CENTER) {
@@ -97,7 +97,7 @@ public class SimpleTicketDrawable extends TicketDrawable {
         drawShape.recycle();
     }
 
-    protected void drawRight(Canvas canvas, Paint paint, IBoundaryShape shape) {
+    protected void drawRight(Canvas canvas, Paint paint, IShape shape) {
         final Bitmap drawShape = getShape(shape);
         float y = shape.getDividingSpace();
         if (shape.getStartDrawGravity() == TicketParam.DrawGravity.CENTER) {
@@ -112,7 +112,7 @@ public class SimpleTicketDrawable extends TicketDrawable {
         drawShape.recycle();
     }
 
-    protected void drawBottom(Canvas canvas, Paint paint, IBoundaryShape shape) {
+    protected void drawBottom(Canvas canvas, Paint paint, IShape shape) {
         final Bitmap drawShape = getShape(shape);
         float x = shape.getDividingSpace();
         if (shape.getStartDrawGravity() == TicketParam.DrawGravity.CENTER) {
@@ -137,16 +137,16 @@ public class SimpleTicketDrawable extends TicketDrawable {
 
     public static final class Builder {
         private Drawable background;
-        private IBoundaryShape[] boundaryShapes = new IBoundaryShape[4];
+        private IShape[] boundaryShapes = new IShape[4];
 
         public Builder(Drawable background) {
             this.background = background;
         }
 
-        public Builder setBoundaryShape(IBoundaryShape leftShape,
-                                        IBoundaryShape topShape,
-                                        IBoundaryShape rightShape,
-                                        IBoundaryShape bottomShape) {
+        public Builder setBoundaryShape(IShape leftShape,
+                                        IShape topShape,
+                                        IShape rightShape,
+                                        IShape bottomShape) {
             boundaryShapes[LEFT_BOUNDARY_SHAPE_INDEX] = leftShape;
             boundaryShapes[TOP_BOUNDARY_SHAPE_INDEX] = topShape;
             boundaryShapes[RIGHT_BOUNDARY_SHAPE_INDEX] = rightShape;

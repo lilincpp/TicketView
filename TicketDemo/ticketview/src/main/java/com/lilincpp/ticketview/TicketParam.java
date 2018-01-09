@@ -1,7 +1,7 @@
 package com.lilincpp.ticketview;
 
 /**
- * Created by Administrator on 2018/1/5.
+ * Created by colin on 2018/1/5.
  */
 
 public final class TicketParam {

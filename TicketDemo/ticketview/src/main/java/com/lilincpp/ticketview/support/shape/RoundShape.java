@@ -3,17 +3,16 @@ package com.lilincpp.ticketview.support.shape;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
 
-import com.lilincpp.ticketview.IBoundaryShape;
+import com.lilincpp.ticketview.IShape;
 import com.lilincpp.ticketview.TicketParam;
 
 /**
- * Created by Administrator on 2018/1/5.
+ * Created by lilin on 2018/1/5.
  */
 
-public class RoundBoundaryShape implements IBoundaryShape {
-    private static final String TAG = "RoundBoundaryShape";
+public class RoundShape implements IShape {
+    private static final String TAG = "RoundShape";
 
     private static final int DEFAULT_RADIUS = 32;
     private static final int DEFAULT_QUANTITY = -1;
