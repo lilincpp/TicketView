@@ -47,7 +47,6 @@ public class SimpleTicketDrawable extends TicketDrawable {
 
         for (int i = 0; i < mBoundaryShapes.length; ++i) {
             final IBoundaryShape shape = mBoundaryShapes[i];
-            Log.e(TAG, "drawTargetShape: " + (shape == null));
             if (shape == null) continue;
             switch (i) {
                 case LEFT_BOUNDARY_SHAPE_INDEX:
@@ -87,7 +86,7 @@ public class SimpleTicketDrawable extends TicketDrawable {
         final Bitmap drawShape = getShape(shape);
         float x = shape.getDividingSpace();
         if (shape.getStartDrawGravity() == TicketParam.DrawGravity.CENTER) {
-            x = canvas.getWidth() / 2;
+            x = canvas.getWidth() / 2 - drawShape.getWidth() / 2;
         }
         final int count = shape.getCount() == -1 ?
                 calculateItemCount(shape.getWidth(), shape.getDividingSpace(), canvas.getWidth()) : shape.getCount();
@@ -117,7 +116,7 @@ public class SimpleTicketDrawable extends TicketDrawable {
         final Bitmap drawShape = getShape(shape);
         float x = shape.getDividingSpace();
         if (shape.getStartDrawGravity() == TicketParam.DrawGravity.CENTER) {
-            x = canvas.getWidth() / 2;
+            x =  canvas.getWidth() / 2 - drawShape.getWidth() / 2;
         }
         final int count = shape.getCount() == -1 ?
                 calculateItemCount(shape.getWidth(), shape.getDividingSpace(), canvas.getWidth()) : shape.getCount();

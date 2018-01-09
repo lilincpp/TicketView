@@ -13,6 +13,7 @@ import com.lilincpp.ticketview.TicketParam;
  */
 
 public class RoundBoundaryShape implements IBoundaryShape {
+    private static final String TAG = "RoundBoundaryShape";
 
     private static final int DEFAULT_RADIUS = 32;
     private static final int DEFAULT_QUANTITY = -1;
@@ -52,7 +53,7 @@ public class RoundBoundaryShape implements IBoundaryShape {
 
     @Override
     public Rect getMarginBounds() {
-        return new Rect(-getRadius() / 2, -getRadius() / 2, -getRadius() / 2, -getRadius() / 2);
+        return new Rect(-getRadius() , -getRadius(), -getRadius() , -getRadius() );
     }
 
     public void setRadius(int radius) {

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SimpleTicketDividingLine">
+        <attr name="line_gravity">
+            <flag name="vertical" value="0" />
+            <flag name="horizontal" value="1" />
+        </attr>
+        <attr name="line_drawWeight" format="float" />
+        <attr name="line_color" format="color" />
+        <attr name="line_padding" format="dimension" />
+        <attr name="line_width" format="dimension" />
+        <attr name="line_gap" format="dimension" />
+    </declare-styleable>
+</resources>
