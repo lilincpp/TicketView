@@ -4,20 +4,21 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-import com.lilincpp.ticketview.IShape;
+import com.lilincpp.ticketview.IBoundaryShape;
 import com.lilincpp.ticketview.TicketParam;
 
 /**
  * Created by lilin on 2018/1/5.
  */
 
-public class RoundShape implements IShape {
-    private static final String TAG = "RoundShape";
+public class SimpleRoundShape implements IBoundaryShape {
+    private static final String TAG = "SimpleRoundShape";
 
     private static final int DEFAULT_RADIUS = 32;
     private static final int DEFAULT_QUANTITY = -1;
     private int mQuantity;
     private int mRadius;
+    private float mDividingSpace;
     private TicketParam.DrawGravity mStartDrawSpace = TicketParam.DrawGravity.START;
 
     @Override
@@ -27,7 +28,7 @@ public class RoundShape implements IShape {
 
     @Override
     public float getDividingSpace() {
-        return getRadius() / 2;
+        return (mDividingSpace == 0 ? getRadius() / 2 : mDividingSpace);
     }
 
     @Override
@@ -52,7 +53,7 @@ public class RoundShape implements IShape {
 
     @Override
     public Rect getMarginBounds() {
-        return new Rect(-getRadius() , -getRadius(), -getRadius() , -getRadius() );
+        return new Rect(-getRadius(), -getRadius(), -getRadius(), -getRadius());
     }
 
     public void setRadius(int radius) {
@@ -69,5 +70,9 @@ public class RoundShape implements IShape {
 
     public void setStartDrawGravity(TicketParam.DrawGravity gravity) {
         mStartDrawSpace = gravity;
+    }
+
+    public void setDividingSpace(float dividingSpace) {
+        this.mDividingSpace = dividingSpace;
     }
 }

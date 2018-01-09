@@ -24,9 +24,6 @@ public abstract class TicketDrawable extends Drawable {
     private Paint mPaint;
 
     public TicketDrawable(Drawable background) {
-        if (background == null) {
-            background = new ColorDrawable(Color.WHITE);
-        }
         mBackground = background;
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setColor(Color.WHITE);

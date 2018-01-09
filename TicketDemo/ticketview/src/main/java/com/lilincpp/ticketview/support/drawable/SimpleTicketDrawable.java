@@ -7,8 +7,9 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
-import com.lilincpp.ticketview.IShape;
+import com.lilincpp.ticketview.IBoundaryShape;
 import com.lilincpp.ticketview.TicketDrawable;
 import com.lilincpp.ticketview.TicketParam;
 
@@ -24,7 +25,7 @@ public class SimpleTicketDrawable extends TicketDrawable {
     private static final int TOP_BOUNDARY_SHAPE_INDEX = 1;
     private static final int RIGHT_BOUNDARY_SHAPE_INDEX = 2;
     private static final int BOTTOM_BOUNDARY_SHAPE_INDEX = 3;
-    private IShape[] mBoundaryShapes;
+    private IBoundaryShape[] mBoundaryShapes;
     private Paint mShapePaint;
 
     private SimpleTicketDrawable(SimpleTicketDrawable.Builder builder) {
@@ -34,7 +35,7 @@ public class SimpleTicketDrawable extends TicketDrawable {
         mShapePaint.setColor(Color.WHITE);
     }
 
-    public Bitmap getShape(IShape shape) {
+    public Bitmap getShape(IBoundaryShape shape) {
         Bitmap bitmap = Bitmap.createBitmap(shape.getWidth(), shape.getHeight(), Bitmap.Config.ARGB_8888);
         shape.draw(new Canvas(bitmap), mShapePaint);
         return bitmap;
@@ -46,7 +47,7 @@ public class SimpleTicketDrawable extends TicketDrawable {
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
 
         for (int i = 0; i < mBoundaryShapes.length; ++i) {
-            final IShape shape = mBoundaryShapes[i];
+            final IBoundaryShape shape = mBoundaryShapes[i];
             if (shape == null) continue;
             switch (i) {
                 case LEFT_BOUNDARY_SHAPE_INDEX:
@@ -67,14 +68,18 @@ public class SimpleTicketDrawable extends TicketDrawable {
     }
 
 
-    protected void drawLeft(Canvas canvas, Paint paint, IShape shape) {
+    protected void drawLeft(Canvas canvas, Paint paint, IBoundaryShape shape) {
         final Bitmap drawShape = getShape(shape);
         float y = shape.getDividingSpace();
-        if (shape.getStartDrawGravity() == TicketParam.DrawGravity.CENTER) {
-            y = canvas.getHeight() / 2;
-        }
         final int count = shape.getCount() == -1 ?
                 calculateItemCount(shape.getHeight(), shape.getDividingSpace(), canvas.getHeight()) : shape.getCount();
+        if (shape.getStartDrawGravity() == TicketParam.DrawGravity.CENTER) {
+            y = canvas.getHeight() / 2;
+        } else {
+            float adjustSpace = adjustVerticalSpace(canvas.getHeight(), count, shape);
+            y = y + adjustSpace;
+        }
+
         for (int i = 0; i < count; ++i) {
             canvas.drawBitmap(drawShape, shape.getMarginBounds().left, y, paint);
             y = y + shape.getHeight() + shape.getDividingSpace();
@@ -82,14 +87,17 @@ public class SimpleTicketDrawable extends TicketDrawable {
         drawShape.recycle();
     }
 
-    protected void drawTop(Canvas canvas, Paint paint, IShape shape) {
+    protected void drawTop(Canvas canvas, Paint paint, IBoundaryShape shape) {
         final Bitmap drawShape = getShape(shape);
         float x = shape.getDividingSpace();
-        if (shape.getStartDrawGravity() == TicketParam.DrawGravity.CENTER) {
-            x = canvas.getWidth() / 2 - drawShape.getWidth() / 2;
-        }
         final int count = shape.getCount() == -1 ?
                 calculateItemCount(shape.getWidth(), shape.getDividingSpace(), canvas.getWidth()) : shape.getCount();
+        if (shape.getStartDrawGravity() == TicketParam.DrawGravity.CENTER) {
+            x = canvas.getWidth() / 2 - drawShape.getWidth() / 2;
+        } else {
+            float adjustSpace = adjustHorizontalSpace(canvas.getWidth(), count, shape);
+            x += adjustSpace;
+        }
         for (int i = 0; i < count; ++i) {
             canvas.drawBitmap(drawShape, x, shape.getMarginBounds().top, paint);
             x = x + shape.getWidth() + shape.getDividingSpace();
@@ -97,14 +105,17 @@ public class SimpleTicketDrawable extends TicketDrawable {
         drawShape.recycle();
     }
 
-    protected void drawRight(Canvas canvas, Paint paint, IShape shape) {
+    protected void drawRight(Canvas canvas, Paint paint, IBoundaryShape shape) {
         final Bitmap drawShape = getShape(shape);
         float y = shape.getDividingSpace();
-        if (shape.getStartDrawGravity() == TicketParam.DrawGravity.CENTER) {
-            y = canvas.getHeight() / 2;
-        }
         final int count = shape.getCount() == -1 ?
                 calculateItemCount(shape.getHeight(), shape.getDividingSpace(), canvas.getHeight()) : shape.getCount();
+        if (shape.getStartDrawGravity() == TicketParam.DrawGravity.CENTER) {
+            y = canvas.getHeight() / 2;
+        } else {
+            float adjustSpace = adjustVerticalSpace(canvas.getHeight(), count, shape);
+            y = y + adjustSpace;
+        }
         for (int i = 0; i < count; ++i) {
             canvas.drawBitmap(drawShape, shape.getMarginBounds().right + canvas.getWidth(), y, paint);
             y = y + shape.getHeight() + shape.getDividingSpace();
@@ -112,14 +123,17 @@ public class SimpleTicketDrawable extends TicketDrawable {
         drawShape.recycle();
     }
 
-    protected void drawBottom(Canvas canvas, Paint paint, IShape shape) {
+    protected void drawBottom(Canvas canvas, Paint paint, IBoundaryShape shape) {
         final Bitmap drawShape = getShape(shape);
         float x = shape.getDividingSpace();
-        if (shape.getStartDrawGravity() == TicketParam.DrawGravity.CENTER) {
-            x =  canvas.getWidth() / 2 - drawShape.getWidth() / 2;
-        }
         final int count = shape.getCount() == -1 ?
                 calculateItemCount(shape.getWidth(), shape.getDividingSpace(), canvas.getWidth()) : shape.getCount();
+        if (shape.getStartDrawGravity() == TicketParam.DrawGravity.CENTER) {
+            x = canvas.getWidth() / 2 - drawShape.getWidth() / 2;
+        } else {
+            float adjustSpace = adjustHorizontalSpace(canvas.getWidth(), count, shape);
+            x += adjustSpace;
+        }
         for (int i = 0; i < count; ++i) {
             canvas.drawBitmap(drawShape, x, shape.getMarginBounds().bottom + canvas.getHeight(), paint);
             x = x + shape.getWidth() + shape.getDividingSpace();
@@ -135,18 +149,28 @@ public class SimpleTicketDrawable extends TicketDrawable {
         }
     }
 
+    private float adjustHorizontalSpace(int canvasWidth, int count, IBoundaryShape shape) {
+        float space = canvasWidth - shape.getWidth() * count - shape.getDividingSpace() * (count + 1);
+        return space / 2;
+    }
+
+    private float adjustVerticalSpace(int canvasheight, int count, IBoundaryShape shape) {
+        float space = canvasheight - shape.getHeight() * count - shape.getDividingSpace() * (count + 1);
+        return space / 2;
+    }
+
     public static final class Builder {
         private Drawable background;
-        private IShape[] boundaryShapes = new IShape[4];
+        private IBoundaryShape[] boundaryShapes = new IBoundaryShape[4];
 
         public Builder(Drawable background) {
             this.background = background;
         }
 
-        public Builder setBoundaryShape(IShape leftShape,
-                                        IShape topShape,
-                                        IShape rightShape,
-                                        IShape bottomShape) {
+        public Builder setBoundaryShape(IBoundaryShape leftShape,
+                                        IBoundaryShape topShape,
+                                        IBoundaryShape rightShape,
+                                        IBoundaryShape bottomShape) {
             boundaryShapes[LEFT_BOUNDARY_SHAPE_INDEX] = leftShape;
             boundaryShapes[TOP_BOUNDARY_SHAPE_INDEX] = topShape;
             boundaryShapes[RIGHT_BOUNDARY_SHAPE_INDEX] = rightShape;

@@ -7,21 +7,18 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
-import com.lilincpp.ticketview.IDividingLineShape;
+import com.lilincpp.ticketview.ICustomShape;
 import com.lilincpp.ticketview.R;
 
 /**
  * Created by colin on 2018/1/9.
  */
 
-public class SimpleTicketDividingLine extends View implements IDividingLineShape {
+public class SimpleTicketDividingLine extends View implements ICustomShape {
 
     private static final String TAG = "SimpleTicketDividingLin";
 
@@ -81,7 +78,7 @@ public class SimpleTicketDividingLine extends View implements IDividingLineShape
     }
 
     @Override
-    public void drawLine(Canvas canvas) {
+    public void drawCustom(Canvas canvas) {
         mPath.reset();
         if (mLineGravity == HORIZONTAL) {
             mPath.moveTo(mLinePadding, mLineWeight * canvas.getHeight());
@@ -91,5 +88,10 @@ public class SimpleTicketDividingLine extends View implements IDividingLineShape
             mPath.lineTo(mLineWeight * canvas.getWidth(), canvas.getHeight() - mLinePadding);
         }
         canvas.drawPath(mPath, mPaint);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        setMeasuredDimension(0, 0);
     }
 }

@@ -6,7 +6,7 @@ import android.graphics.Canvas;
  * Created by colin on 2018/1/9.
  */
 
-public interface IDividingLineShape {
+public interface ICustomShape {
 
-    void drawLine(Canvas canvas);
+    void drawCustom(Canvas canvas);
 }

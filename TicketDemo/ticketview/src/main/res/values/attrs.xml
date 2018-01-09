@@ -17,4 +17,8 @@
         <!--虚线的间距-->
         <attr name="line_gap" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="SimpleTicketView">
+
+    </declare-styleable>
 </resources>

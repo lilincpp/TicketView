@@ -6,9 +6,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.lilincpp.ticketview.IDividingLineShape;
-import com.lilincpp.ticketview.TicketParam;
-import com.lilincpp.ticketview.support.shape.RoundShape;
+import com.lilincpp.ticketview.ICustomShape;
+import com.lilincpp.ticketview.support.shape.SimpleRoundShape;
 import com.lilincpp.ticketview.support.drawable.SimpleTicketDrawable;
 
 /**
@@ -35,16 +34,12 @@ public class SimpleTicketView extends FrameLayout {
 
     private void initView() {
         SimpleTicketDrawable.Builder builder = new SimpleTicketDrawable.Builder(getBackground());
-        RoundShape leftAndRight = new RoundShape();
-        RoundShape topAndBottom = new RoundShape();
-        topAndBottom.setRadius(leftAndRight.getRadius() * 4);
-        topAndBottom.setStartDrawGravity(TicketParam.DrawGravity.CENTER);
-        topAndBottom.setQuantity(1);
+        SimpleRoundShape leftAndRight = new SimpleRoundShape();
         builder.setBoundaryShape(
                 leftAndRight,
-                topAndBottom,
+                null,
                 leftAndRight,
-                topAndBottom
+                null
         );
         setBackground(builder.create());
     }
@@ -56,14 +51,10 @@ public class SimpleTicketView extends FrameLayout {
         //绘制线
         for (int i = 0; i < getChildCount(); ++i) {
             final View child = getChildAt(i);
-            if (child != null && child instanceof IDividingLineShape) {
-                ((IDividingLineShape) child).drawLine(canvas);
+            if (child != null && child instanceof ICustomShape) {
+                ((ICustomShape) child).drawCustom(canvas);
             }
         }
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(0, 0);
-    }
 }

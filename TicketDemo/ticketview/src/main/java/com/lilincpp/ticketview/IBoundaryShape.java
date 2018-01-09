@@ -8,7 +8,7 @@ import android.graphics.Rect;
  * Created by colin on 2018/1/5.
  */
 
-public interface IShape {
+public interface IBoundaryShape {
 
     void draw(Canvas canvas, Paint paint);
 

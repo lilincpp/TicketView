@@ -4,26 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="@drawable/ic_launcher_background"
     tools:context="com.test.ticketdemo.MainActivity">
 
-
     <com.lilincpp.ticketview.support.view.SimpleTicketView
+        android:layout_margin="16dp"
+        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="64dp"
-        android:background="@color/colorAccent"
-        android:orientation="horizontal">
-
-        <com.lilincpp.ticketview.support.view.SimpleTicketDividingLine
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:line_gravity="vertical"
-            app:line_padding="20dp"
-            app:line_drawWeight="0.5"
-            />
-
-    </com.lilincpp.ticketview.support.view.SimpleTicketView>
-
+        android:layout_height="200dp"/>
 
 </LinearLayout>
