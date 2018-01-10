@@ -24,7 +24,7 @@
 
 2. android
 ```
-implementation 'com.github.lilincpp:ticketview:1.0.0'
+compile 'com.github.lilincpp:ticketview:1.0.0'
 ```
 
 ### 未来计划
