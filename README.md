@@ -13,9 +13,19 @@
 ## 配置
 
 1. gradle
+```
+<dependency>
+  <groupId>com.github.lilincpp</groupId>
+  <artifactId>ticketview</artifactId>
+  <version>1.0.0</version>
+  <type>pom</type>
+</dependency>
+```
 
 2. android
-
+```
+implementation 'com.github.lilincpp:ticketview:1.0.0'
+```
 
 ### 未来计划
 
