@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -28,7 +29,7 @@ public class SimpleTicketDividingLine extends View implements ICustomShape {
     private int mLineColor;
     private float mLineWeight;
     private int mLineGravity;
-    private int mLinePadding;
+    private Rect mLinePadding;
     private int mLineWidth;
     private int mLineGap;
 
@@ -51,13 +52,21 @@ public class SimpleTicketDividingLine extends View implements ICustomShape {
     }
 
     private void initView(Context context, AttributeSet attrs) {
-
+        mLinePadding = new Rect(0, 0, 0, 0);
         if (attrs != null) {
             TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.SimpleTicketDividingLine);
             mLineGravity = array.getInt(R.styleable.SimpleTicketDividingLine_line_gravity, HORIZONTAL);
             mLineColor = array.getInt(R.styleable.SimpleTicketDividingLine_line_color, Color.WHITE);
             mLineWeight = array.getFloat(R.styleable.SimpleTicketDividingLine_line_drawWeight, 0f);
-            mLinePadding = array.getDimensionPixelSize(R.styleable.SimpleTicketDividingLine_line_padding, 0);
+            int padding = array.getDimensionPixelSize(R.styleable.SimpleTicketDividingLine_line_padding, 0);
+            int paddingLeft = array.getDimensionPixelSize(R.styleable.SimpleTicketDividingLine_line_paddingLeft, 0);
+            int paddingTop = array.getDimensionPixelSize(R.styleable.SimpleTicketDividingLine_line_paddingTop, 0);
+            int paddingRight = array.getDimensionPixelSize(R.styleable.SimpleTicketDividingLine_line_paddingRight, 0);
+            int paddingBottom = array.getDimensionPixelSize(R.styleable.SimpleTicketDividingLine_line_paddingBottom, 0);
+            mLinePadding.left = paddingLeft == 0 ? padding : paddingLeft;
+            mLinePadding.top = paddingTop == 0 ? padding : paddingTop;
+            mLinePadding.right = paddingRight == 0 ? padding : paddingRight;
+            mLinePadding.bottom = paddingBottom == 0 ? padding : paddingBottom;
             mLineWidth = array.getDimensionPixelSize(R.styleable.SimpleTicketDividingLine_line_width,
                     (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, context.getResources().getDisplayMetrics()));
             mLineGap = array.getDimensionPixelSize(R.styleable.SimpleTicketDividingLine_line_gap,
@@ -81,11 +90,11 @@ public class SimpleTicketDividingLine extends View implements ICustomShape {
     public void drawCustom(Canvas canvas) {
         mPath.reset();
         if (mLineGravity == HORIZONTAL) {
-            mPath.moveTo(mLinePadding, mLineWeight * canvas.getHeight());
-            mPath.lineTo(canvas.getWidth() - mLinePadding, mLineWeight * canvas.getHeight());
+            mPath.moveTo(mLinePadding.left, mLineWeight * canvas.getHeight());
+            mPath.lineTo(canvas.getWidth() - mLinePadding.right, mLineWeight * canvas.getHeight());
         } else {
-            mPath.moveTo(mLineWeight * canvas.getWidth(), mLinePadding);
-            mPath.lineTo(mLineWeight * canvas.getWidth(), canvas.getHeight() - mLinePadding);
+            mPath.moveTo(mLineWeight * canvas.getWidth(), mLinePadding.top);
+            mPath.lineTo(mLineWeight * canvas.getWidth(), canvas.getHeight() - mLinePadding.bottom);
         }
         canvas.drawPath(mPath, mPaint);
     }

@@ -12,20 +12,33 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_margin="16dp"
-        android:background="@color/colorPrimary">
+        app:boundary_show="left|right|top|bottom"
+        android:background="#fff"
+        app:boundary_topDrawWeight="0.7"
+        app:boundary_bottomDrawWeight="0.7"
+        app:boundary_topRadius="20dp"
+        app:boundary_bottomRadius="20dp"
+        app:boundary_topItemQuantity="2"
+        app:boundary_bottomItemQuantity="1"
+        >
+
 
         <com.lilincpp.ticketview.support.view.SimpleTicketDividingLine
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:line_drawWeight="0.7"
+            app:line_color="#E9E9E9"
             app:line_gravity="vertical"
+            app:line_padding="20dp"
             />
 
         <com.lilincpp.ticketview.support.view.SimpleTicketDividingLine
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:line_drawWeight="0.2"
+            app:line_drawWeight="0.84"
+            app:line_color="#E9E9E9"
             app:line_gravity="vertical"
+            app:line_paddingTop="20dp"
             />
 
         <RelativeLayout
@@ -37,11 +50,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="HELLO"/>
+                android:text="HELLO WORLD"/>
 
             <TextView
                 android:layout_alignParentBottom="true"
-                android:layout_width="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:text="HELLO"/>
@@ -55,7 +69,7 @@
         android:id="@+id/ll_two"
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimaryDark"
         android:layout_height="200dp">
 
 

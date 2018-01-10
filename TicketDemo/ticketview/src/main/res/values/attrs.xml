@@ -12,6 +12,10 @@
         <attr name="line_color" format="color" />
         <!--虚线与边的距离-->
         <attr name="line_padding" format="dimension" />
+        <attr name="line_paddingLeft" format="dimension" />
+        <attr name="line_paddingTop" format="dimension" />
+        <attr name="line_paddingRight" format="dimension" />
+        <attr name="line_paddingBottom" format="dimension" />
         <!--虚线的宽度-->
         <attr name="line_width" format="dimension" />
         <!--虚线的间距-->
@@ -19,6 +23,32 @@
     </declare-styleable>
 
     <declare-styleable name="SimpleTicketView">
-
+        <!--展示边装饰物-->
+        <attr name="boundary_show">
+            <flag name="left" value="1" />
+            <flag name="top" value="2" />
+            <flag name="right" value="4" />
+            <flag name="bottom" value="8" />
+        </attr>
+        <!--圆圈半径-->
+        <attr name="boundary_leftRadius" format="dimension" />
+        <attr name="boundary_topRadius" format="dimension" />
+        <attr name="boundary_rightRadius" format="dimension" />
+        <attr name="boundary_bottomRadius" format="dimension" />
+        <!--间距-->
+        <attr name="boundary_leftItemSpace" format="dimension" />
+        <attr name="boundary_topItemSpace" format="dimension" />
+        <attr name="boundary_rightItemSpace" format="dimension" />
+        <attr name="boundary_bottomItemSpace" format="dimension" />
+        <!--数量-->
+        <attr name="boundary_leftItemQuantity" format="integer" />
+        <attr name="boundary_topItemQuantity" format="integer" />
+        <attr name="boundary_rightItemQuantity" format="integer" />
+        <attr name="boundary_bottomItemQuantity" format="integer" />
+        <!--起始位置-->
+        <attr name="boundary_leftDrawWeight" format="float"/>
+        <attr name="boundary_topDrawWeight" format="float"/>
+        <attr name="boundary_rightDrawWeight" format="float"/>
+        <attr name="boundary_bottomDrawWeight" format="float"/>
     </declare-styleable>
 </resources>

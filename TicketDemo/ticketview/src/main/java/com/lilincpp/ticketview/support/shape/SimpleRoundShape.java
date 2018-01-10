@@ -5,7 +5,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 import com.lilincpp.ticketview.IBoundaryShape;
-import com.lilincpp.ticketview.TicketParam;
 
 /**
  * Created by lilin on 2018/1/5.
@@ -19,7 +18,18 @@ public class SimpleRoundShape implements IBoundaryShape {
     private int mQuantity;
     private int mRadius;
     private float mDividingSpace;
-    private TicketParam.DrawGravity mStartDrawSpace = TicketParam.DrawGravity.START;
+    private float mDrawWeight;
+
+    public SimpleRoundShape() {
+
+    }
+
+    public SimpleRoundShape(int quantity, int radius, float space, float drawWeight) {
+        this.mQuantity = quantity;
+        this.mRadius = radius;
+        this.mDividingSpace = space;
+        this.mDrawWeight = drawWeight;
+    }
 
     @Override
     public void draw(Canvas canvas, Paint paint) {
@@ -32,8 +42,8 @@ public class SimpleRoundShape implements IBoundaryShape {
     }
 
     @Override
-    public TicketParam.DrawGravity getStartDrawGravity() {
-        return mStartDrawSpace;
+    public float getStartDrawWeight() {
+        return mDrawWeight;
     }
 
     @Override
@@ -68,8 +78,8 @@ public class SimpleRoundShape implements IBoundaryShape {
         mQuantity = quantity;
     }
 
-    public void setStartDrawGravity(TicketParam.DrawGravity gravity) {
-        mStartDrawSpace = gravity;
+    public void setStartDrawGravity(float gravityWeight) {
+        mDrawWeight = gravityWeight;
     }
 
     public void setDividingSpace(float dividingSpace) {

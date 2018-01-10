@@ -22,6 +22,6 @@ public interface IBoundaryShape {
 
     Rect getMarginBounds();
 
-    TicketParam.DrawGravity getStartDrawGravity();
+    float getStartDrawWeight();
 
 }
