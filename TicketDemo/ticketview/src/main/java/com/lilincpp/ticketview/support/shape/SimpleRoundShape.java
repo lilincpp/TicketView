@@ -15,7 +15,7 @@ public class SimpleRoundShape implements IBoundaryShape {
 
     private static final int DEFAULT_RADIUS = 32;
     private static final int DEFAULT_QUANTITY = -1;
-    private int mQuantity;
+    private int mQuantity = DEFAULT_QUANTITY;
     private int mRadius;
     private float mDividingSpace;
     private float mDrawWeight;
@@ -58,7 +58,7 @@ public class SimpleRoundShape implements IBoundaryShape {
 
     @Override
     public int getCount() {
-        return mQuantity == 0 ? DEFAULT_QUANTITY : mQuantity;
+        return mQuantity;
     }
 
     @Override

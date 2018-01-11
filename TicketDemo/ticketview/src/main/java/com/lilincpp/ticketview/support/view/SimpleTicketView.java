@@ -49,7 +49,7 @@ public class SimpleTicketView extends FrameLayout {
             if ((showMask & FLAG_LEFT_VISIABLE) == FLAG_LEFT_VISIABLE) {
                 int radius = array.getDimensionPixelSize(R.styleable.SimpleTicketView_boundary_leftRadius, 0);
                 int space = array.getDimensionPixelSize(R.styleable.SimpleTicketView_boundary_leftItemSpace, 0);
-                int quantity = array.getInt(R.styleable.SimpleTicketView_boundary_leftItemQuantity, 0);
+                int quantity = array.getInt(R.styleable.SimpleTicketView_boundary_leftItemQuantity, -1);
                 float gravity = array.getFloat(R.styleable.SimpleTicketView_boundary_leftDrawWeight, 0);
                 SimpleRoundShape shape = new SimpleRoundShape(quantity, radius, space, gravity);
                 builder.setLeftBoundaryShape(shape);
@@ -58,7 +58,7 @@ public class SimpleTicketView extends FrameLayout {
             if ((showMask & FLAG_TOP_VISIABLE) == FLAG_TOP_VISIABLE) {
                 int radius = array.getDimensionPixelSize(R.styleable.SimpleTicketView_boundary_topRadius, 0);
                 int space = array.getDimensionPixelSize(R.styleable.SimpleTicketView_boundary_topItemSpace, 0);
-                int quantity = array.getInt(R.styleable.SimpleTicketView_boundary_topItemQuantity, 0);
+                int quantity = array.getInt(R.styleable.SimpleTicketView_boundary_topItemQuantity, -1);
                 float gravity = array.getFloat(R.styleable.SimpleTicketView_boundary_topDrawWeight, 0);
                 SimpleRoundShape shape = new SimpleRoundShape(quantity, radius, space, gravity);
                 builder.setTopBoundaryShape(shape);
@@ -67,7 +67,7 @@ public class SimpleTicketView extends FrameLayout {
             if ((showMask & FLAG_RIGHT_VISIABLE) == FLAG_RIGHT_VISIABLE) {
                 int radius = array.getDimensionPixelSize(R.styleable.SimpleTicketView_boundary_rightRadius, 0);
                 int space = array.getDimensionPixelSize(R.styleable.SimpleTicketView_boundary_rightItemSpace, 0);
-                int quantity = array.getInt(R.styleable.SimpleTicketView_boundary_rightItemQuantity, 0);
+                int quantity = array.getInt(R.styleable.SimpleTicketView_boundary_rightItemQuantity, -1);
                 float gravity = array.getFloat(R.styleable.SimpleTicketView_boundary_rightDrawWeight, 0);
                 SimpleRoundShape shape = new SimpleRoundShape(quantity, radius, space, gravity);
                 builder.setRightBoundaryShape(shape);
@@ -77,7 +77,7 @@ public class SimpleTicketView extends FrameLayout {
             if ((showMask & FLAG_BOTTOM_VISIABLE) == FLAG_BOTTOM_VISIABLE) {
                 int radius = array.getDimensionPixelSize(R.styleable.SimpleTicketView_boundary_bottomRadius, 0);
                 int space = array.getDimensionPixelSize(R.styleable.SimpleTicketView_boundary_bottomItemSpace, 0);
-                int quantity = array.getInt(R.styleable.SimpleTicketView_boundary_bottomItemQuantity, 0);
+                int quantity = array.getInt(R.styleable.SimpleTicketView_boundary_bottomItemQuantity, -1);
                 float gravity = array.getFloat(R.styleable.SimpleTicketView_boundary_bottomDrawWeight, 0);
                 SimpleRoundShape shape = new SimpleRoundShape(quantity, radius, space, gravity);
                 builder.setBottomBoundaryShape(shape);

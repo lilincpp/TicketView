@@ -1,13 +1,17 @@
 package com.lilincpp.ticketview;
 
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+
+import static android.view.View.LAYER_TYPE_SOFTWARE;
 
 
 /**
@@ -39,6 +43,25 @@ public abstract class TicketDrawable extends Drawable {
             drawTargetShape(canvas, mPaint);
             canvas.restoreToCount(layerId);
         }
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setColor(Color.GRAY);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(8);
+//        paint.setShadowLayer(20,0,0,Color.BLACK);
+        paint.setMaskFilter(new BlurMaskFilter(20,BlurMaskFilter.Blur.NORMAL));
+        Path[] lines = test();
+        Path[] shapes = test2();
+
+        for (int i = 0; i < lines.length; ++i) {
+            canvas.drawPath(lines[i], paint);
+        }
+
+        for (int i = 0; i < shapes.length; ++i) {
+            canvas.drawPath(shapes[i], paint);
+        }
+
+
     }
 
     /**
@@ -48,6 +71,10 @@ public abstract class TicketDrawable extends Drawable {
      * @param paint
      */
     public abstract void drawTargetShape(Canvas canvas, Paint paint);
+
+    public abstract Path[] test();
+
+    public abstract Path[] test2();
 
 
     public void setBackground(Drawable background) {
