@@ -17,7 +17,7 @@
 <dependency>
   <groupId>com.github.lilincpp</groupId>
   <artifactId>ticketview</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <type>pom</type>
 </dependency>
 ```
@@ -29,7 +29,7 @@ compile 'com.github.lilincpp:ticketview:1.0.0'
 
 ### 未来计划
 
-- [ ] 边缘描边
+- [x] 边缘描边
 - [ ] 边缘阴影
 - [ ] 更多修饰形状的实现
 - [x] 圆形修饰形状的实现
