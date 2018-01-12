@@ -49,7 +49,7 @@ public class MyDrawable extends Drawable {
                 32 / 2 + offset,
                 20 + 32 + offset
                 , -90, 180, false);
-        mPath.addRect(offset-20,20 + 32 + offset,offset+20,20 + 32 + offset+40, Path.Direction.CCW);
+        mPath.addRect(offset - 20, 20 + 32 + offset, offset + 20, 20 + 32 + offset + 40, Path.Direction.CCW);
         mPath.lineTo(offset, bounds.bottom - offset);
         mPath.lineTo(bounds.right - offset, bounds.bottom - offset);
         mPath.lineTo(bounds.right - offset, bounds.top + offset);

@@ -1,9 +1,12 @@
 package com.lilincpp.ticketview.support.drawable;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PixelFormat;
+import android.graphics.RectF;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 
@@ -21,18 +24,37 @@ public class SimpleBoundaryDrawable extends Drawable {
     private static final int BOTTOM_BOUNDARY_INDEX = 3;
 
     private IBoundaryShape[] mBoundaryShapes = new IBoundaryShape[4];
-
+    private int mBackgroundColor = Color.WHITE;
     private Paint mShapePaint, mLinePaint;
+    private Path mContentPath;
 
     private SimpleBoundaryDrawable(SimpleBoundaryDrawable.Builder builder) {
         mBoundaryShapes = builder.boundaryShapes;
+        mBackgroundColor = builder.backgroundColor;
         mShapePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mContentPath = new Path();
+        mShapePaint.setAntiAlias(true);
+        mShapePaint.setColor(mBackgroundColor);
     }
 
     @Override
     public void draw(Canvas canvas) {
+        if (canvas != null) {
 
+        }
     }
+
+    private void drawLeft(Canvas canvas) {
+        
+        final IBoundaryShape leftShape = mBoundaryShapes[LEFT_BOUNDARY_INDEX];
+        float y = leftShape.getSpace();
+        if (leftShape.getStyle() == IBoundaryShape.Style.ROUND) {
+
+        } else {
+
+        }
+    }
+
 
     @Override
     public void setAlpha(int alpha) {
@@ -53,6 +75,15 @@ public class SimpleBoundaryDrawable extends Drawable {
             return PixelFormat.OPAQUE;
         }
         return PixelFormat.TRANSLUCENT;
+    }
+
+    private static class Position {
+        float x, y;
+
+        public Position(float x, float y) {
+            this.x = x;
+            this.y = y;
+        }
     }
 
     public static class Builder {
