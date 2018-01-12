@@ -12,16 +12,13 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
 import android.graphics.drawable.shapes.RoundRectShape;
+import android.graphics.drawable.shapes.Shape;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TableRow;
-
-import com.lilincpp.ticketview.TicketParam;
-import com.lilincpp.ticketview.support.drawable.SimpleTicketDrawable;
-import com.lilincpp.ticketview.support.shape.SimpleRoundShape;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,28 +27,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ShapeDrawable
 
         LinearLayout two = findViewById(R.id.ll_two);
-//
-        SimpleTicketDrawable.Builder builder =
-                new SimpleTicketDrawable.Builder(buildBackground());
-        SimpleRoundShape leftAndRight = new SimpleRoundShape();
-        SimpleRoundShape bottomAndTop = new SimpleRoundShape();
-        bottomAndTop.setRadius(leftAndRight.getRadius() * 4);
-        bottomAndTop.setQuantity(1);
-        bottomAndTop.setStartDrawGravity(0.5f);
-        builder.setBoundaryShape(
-                leftAndRight,
-                bottomAndTop,
-                leftAndRight,
-                bottomAndTop
-        );
-        two.setBackground(builder.create());
-        two.setElevation(8f);
+//        two.setBackground(builder.create());
+//        two.setElevation(8f);
 
         CardView cardView = findViewById(R.id.cardview);
         cardView.setBackground(buildBackground());
         ViewCompat.setElevation(two,9f);
+        two.setLayerType(View.LAYER_TYPE_SOFTWARE,null);
+        two.setBackground(new MyDrawable());
+
     }
 
     private Drawable buildBackground() {

@@ -3,6 +3,7 @@ package com.lilincpp.ticketview;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 
 /**
  * Created by colin on 2018/1/5.
@@ -10,18 +11,27 @@ import android.graphics.Rect;
 
 public interface IBoundaryShape {
 
-    void draw(Canvas canvas, Paint paint);
+    RectF getBounds();
 
-    int getCount();
+    float getWidth();
 
-    float getDividingSpace();
+    float getHeight();
 
-    int getWidth();
+    float getSpace();
 
-    int getHeight();
+    int getQuantity();
 
-    Rect getMarginBounds();
+    float getStartDrawPositionWeight();
 
-    float getStartDrawWeight();
+    boolean startDrawPositionInCenter();
 
+    Style getStyle();
+
+    float getShadowPx();
+
+
+    public enum Style {
+        ROUND,
+        RECT
+    }
 }
