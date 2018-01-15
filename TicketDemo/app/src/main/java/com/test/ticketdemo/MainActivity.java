@@ -21,6 +21,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.lilincpp.ticketview.support.drawable.SimpleBoundaryDrawable;
+import com.lilincpp.ticketview.support.shape.SimpleBoundaryShape;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -33,11 +36,15 @@ public class MainActivity extends AppCompatActivity {
 //        two.setBackground(builder.create());
 //        two.setElevation(8f);
 
-        CardView cardView = findViewById(R.id.cardview);
-        cardView.setBackground(buildBackground());
-        ViewCompat.setElevation(two,9f);
         two.setLayerType(View.LAYER_TYPE_SOFTWARE,null);
-        two.setBackground(new MyDrawable());
+        SimpleBoundaryDrawable.Builder builder = new SimpleBoundaryDrawable.Builder();
+        builder.setBoundaryShape(
+                new SimpleBoundaryShape(),
+                new SimpleBoundaryShape(),
+                new SimpleBoundaryShape(),
+                new SimpleBoundaryShape()
+        );
+        two.setBackground(builder.create());
 
     }
 

@@ -20,13 +20,14 @@
 
     </LinearLayout>
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardview"
+    <com.lilincpp.ticketview.support.view.TicketView
         android:layout_margin="16dp"
+        android:layerType="software"
         android:layout_width="match_parent"
-        android:elevation="8dp"
-        android:visibility="gone"
-        android:layout_height="100dp"/>
+        android:layout_height="100dp">
+
+
+    </com.lilincpp.ticketview.support.view.TicketView>
 
 
 

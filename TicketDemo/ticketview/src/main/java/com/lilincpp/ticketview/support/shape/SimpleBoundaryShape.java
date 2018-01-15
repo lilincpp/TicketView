@@ -5,7 +5,7 @@ import android.graphics.RectF;
 import com.lilincpp.ticketview.IBoundaryShape;
 
 /**
- * Created by Administrator on 2018/1/12.
+ * Created by lilin on 2018/1/12.
  */
 
 public class SimpleBoundaryShape implements IBoundaryShape {
@@ -60,12 +60,12 @@ public class SimpleBoundaryShape implements IBoundaryShape {
 
     @Override
     public float getWidth() {
-        return mRectF.right - mRectF.left;
+        return mRectF.width();
     }
 
     @Override
     public float getHeight() {
-        return mRectF.bottom - mRectF.top;
+        return mRectF.height();
     }
 
     @Override
