@@ -35,9 +35,9 @@ public class TicketView extends FrameLayout {
         SimpleBoundaryDrawable.Builder builder = new SimpleBoundaryDrawable.Builder();
         builder.setBoundaryShape(
                 new SimpleBoundaryShape(),
+                null,
                 new SimpleBoundaryShape(),
-                new SimpleBoundaryShape(),
-                new SimpleBoundaryShape()
+                null
         );
         builder.setBackgroundColor(Color.WHITE);
         setBackground(builder.create());

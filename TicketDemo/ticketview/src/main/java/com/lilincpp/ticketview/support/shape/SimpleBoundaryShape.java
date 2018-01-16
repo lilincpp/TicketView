@@ -11,7 +11,7 @@ import com.lilincpp.ticketview.IBoundaryShape;
 public class SimpleBoundaryShape implements IBoundaryShape {
 
     private static final float DEFAULT_WIDTH = 32;
-    private static final int DEFAULT_SPACE = 16;
+    private static final int DEFAULT_SPACE = 24;
     private static final int DEFAULT_ITEM_COUNT = -1;
     private static final int DEFAULT_SHADOW_PX = 16;
 
