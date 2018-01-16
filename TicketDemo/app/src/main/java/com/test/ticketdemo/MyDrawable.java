@@ -12,6 +12,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 
 /**
@@ -55,8 +56,7 @@ public class MyDrawable extends Drawable {
         mPath.lineTo(offset + 20, bounds.bottom - offset);
         RectF rectF1 = new RectF(offset + 20, bounds.bottom - offset - 32 / 2, offset + 20 + 32, bounds.bottom - offset + 32 / 2);
         mPath.arcTo(
-                rectF1,
-                -180, 180, false
+                rectF1, -180, 180, false
         );
         mPath.lineTo(bounds.right - offset, bounds.bottom - offset);
         mPath.lineTo(bounds.right - offset, bounds.top + offset);
@@ -64,33 +64,32 @@ public class MyDrawable extends Drawable {
 
     }
 
+
     @Override
     public void draw(@NonNull Canvas canvas) {
-        int offset = 100;
-        mPath2.moveTo(offset, offset);
-        mPath2.lineTo(offset,canvas.getHeight()-offset);
-        mPath2.lineTo(canvas.getWidth()-offset,canvas.getHeight()-offset);
-        mPath2.lineTo(canvas.getWidth()-offset,offset);
-        mPath2.close();
-        canvas.drawPath(mPath2, mPaint);
+        Log.e(TAG, "draw: ");
+        canvas.drawPath(mPath, mPaint);
 //        canvas.drawPath(mPath, mPaint);
 //        canvas.drawPath(mPath, mPaint2);
 //        mPaint.setStyle(Paint.Style.STROKE);
 //        canvas.drawPath(mPath, mPaint);
     }
 
+    private static final String TAG = "MyDrawable";
+
     @Override
     public void setAlpha(int alpha) {
-
+        Log.e(TAG, "setAlpha: ");
     }
 
     @Override
     public void setColorFilter(@Nullable ColorFilter colorFilter) {
-
+        Log.e(TAG, "setColorFilter: ");
     }
 
     @Override
     public int getOpacity() {
+        Log.e(TAG, "getOpacity: ");
         return PixelFormat.TRANSLUCENT;
     }
 }

@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 new SimpleBoundaryShape(),
                 new SimpleBoundaryShape()
         );
-        two.setBackground(builder.create());
+        two.setBackground(new MyDrawable());
 
     }
 
