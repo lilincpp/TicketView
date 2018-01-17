@@ -22,7 +22,7 @@
         <attr name="line_gap" format="dimension" />
     </declare-styleable>
 
-    <declare-styleable name="SimpleTicketView">
+    <declare-styleable name="TicketView">
         <!--展示边装饰物-->
         <attr name="boundary_show">
             <flag name="left" value="1" />
@@ -46,9 +46,17 @@
         <attr name="boundary_rightItemQuantity" format="integer" />
         <attr name="boundary_bottomItemQuantity" format="integer" />
         <!--起始位置-->
-        <attr name="boundary_leftDrawWeight" format="float"/>
-        <attr name="boundary_topDrawWeight" format="float"/>
-        <attr name="boundary_rightDrawWeight" format="float"/>
-        <attr name="boundary_bottomDrawWeight" format="float"/>
+        <attr name="boundary_leftDrawWeight" format="float" />
+        <attr name="boundary_topDrawWeight" format="float" />
+        <attr name="boundary_rightDrawWeight" format="float" />
+        <attr name="boundary_bottomDrawWeight" format="float" />
+        <!--阴影-->
+        <attr name="boundary_shadowPx" format="dimension" />
+        <!--边缘线-->
+        <attr name="boundary_hasStroke" format="boolean" />
+        <attr name="boundary_strokeColor" format="color" />
+        <attr name="boundary_strokeWidth" format="dimension" />
+        <!--是否圆角-->
+        <attr name="boundary_roundCorner" format="dimension" />
     </declare-styleable>
 </resources>

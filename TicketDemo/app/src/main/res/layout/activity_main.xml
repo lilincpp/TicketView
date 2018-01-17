@@ -5,7 +5,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:background="#e9e9e9"
+              android:background="@drawable/ic_launcher_background"
               tools:context="com.test.ticketdemo.MainActivity">
 
 
@@ -22,9 +22,17 @@
 
     <com.lilincpp.ticketview.support.view.TicketView
         android:layout_margin="16dp"
-        android:layerType="software"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="160dp"
+        app:boundary_show="left|right|top|bottom"
+        app:boundary_topItemQuantity="1"
+        app:boundary_topRadius="24dp"
+        app:boundary_bottomRadius="24dp"
+        app:boundary_bottomItemQuantity="1"
+        app:boundary_hasStroke="true"
+        app:boundary_strokeWidth="1dp"
+        app:boundary_roundCorner="2dp"
+        >
 
 
     </com.lilincpp.ticketview.support.view.TicketView>

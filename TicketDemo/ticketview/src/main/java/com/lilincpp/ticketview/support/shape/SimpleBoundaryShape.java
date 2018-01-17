@@ -11,7 +11,8 @@ import com.lilincpp.ticketview.IBoundaryShape;
 public class SimpleBoundaryShape implements IBoundaryShape {
 
     private static final float DEFAULT_WIDTH = 32;
-    private static final int DEFAULT_SPACE = 24;
+    public static final int DEFAULT_ITEM_SPACE = 24;
+    public static final int DEFAULT_ITEM_RADIUS = 16;
     private static final int DEFAULT_ITEM_COUNT = -1;
     private static final int DEFAULT_SHADOW_PX = 16;
 
@@ -20,12 +21,14 @@ public class SimpleBoundaryShape implements IBoundaryShape {
             -DEFAULT_WIDTH / 2,
             DEFAULT_WIDTH / 2,
             DEFAULT_WIDTH / 2);
-    private float mItemSpace = DEFAULT_SPACE;
+    private float mItemSpace = DEFAULT_ITEM_SPACE;
     private int mItemCount = DEFAULT_ITEM_COUNT;
     private float mStartDrawWeight = 0;
     private boolean mStartDrawInCenter = false;
     private Style mStyle = Style.ROUND;
     private float mShadowPx = DEFAULT_SHADOW_PX;
+
+
 
 
     @Override
@@ -73,6 +76,13 @@ public class SimpleBoundaryShape implements IBoundaryShape {
         mRectF.right = width / 2;
         mRectF.top = -height / 2;
         mRectF.bottom = height / 2;
+    }
+
+    public void setRadius(float radius) {
+        mRectF.left = -radius;
+        mRectF.right = radius;
+        mRectF.top = -radius;
+        mRectF.bottom = radius;
     }
 
     public void setItemSpace(float space) {
