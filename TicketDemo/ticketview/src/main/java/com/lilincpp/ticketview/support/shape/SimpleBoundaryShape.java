@@ -68,11 +68,6 @@ public class SimpleBoundaryShape implements IBoundaryShape {
         return mRectF.height();
     }
 
-    @Override
-    public float getShadowPx() {
-        return mShadowPx;
-    }
-
     public void setWidth(float width, float height) {
         mRectF.left = -width / 2;
         mRectF.right = width / 2;

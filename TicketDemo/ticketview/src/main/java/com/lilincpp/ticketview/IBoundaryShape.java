@@ -27,9 +27,6 @@ public interface IBoundaryShape {
 
     Style getStyle();
 
-    float getShadowPx();
-
-
     public enum Style {
         ROUND,
         RECT

@@ -40,6 +40,9 @@ public class TicketView extends FrameLayout {
                 null
         );
         builder.setBackgroundColor(Color.WHITE);
+        builder.setShadowPx(16);
+        builder.setShadowEnable(false);
+        builder.setBoundaryEnable(true);
         setBackground(builder.create());
     }
 
@@ -48,6 +51,6 @@ public class TicketView extends FrameLayout {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Log.e(TAG, "onDraw: " );
+        Log.e(TAG, "onDraw: ");
     }
 }
