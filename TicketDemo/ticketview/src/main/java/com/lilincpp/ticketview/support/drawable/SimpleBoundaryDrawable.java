@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -30,10 +31,15 @@ public class SimpleBoundaryDrawable extends Drawable {
     private Paint mShapePaint, mLinePaint;
     private Path mContentPath;
     private float[] mShadowPadding = new float[4];
+    private boolean mRounded; //是否开启圆角
+    private float mRoundedRadius; //圆角半径
 
     private SimpleBoundaryDrawable(SimpleBoundaryDrawable.Builder builder) {
         mBoundaryShapes = builder.boundaryShapes;
         mContentPath = new Path();
+        mRounded = builder.hasRounded;
+        Log.e(TAG, "SimpleBoundaryDrawable: mRounded=" + mRounded);
+        mRoundedRadius = builder.roundedRadius;
         initShape(builder);
         initBoundaryLine(builder);
         calculatePadding(builder.shadowPx, builder.shadowOffsets);
@@ -50,7 +56,7 @@ public class SimpleBoundaryDrawable extends Drawable {
 
     private void initBoundaryLine(SimpleBoundaryDrawable.Builder builder) {
         if (builder.hasBoundaryLine) {
-            Log.e(TAG, "initBoundaryLine: " );
+            Log.e(TAG, "initBoundaryLine: ");
             mLinePaint = new Paint();
             mLinePaint.setColor(builder.lineColor);
             mLinePaint.setStyle(Paint.Style.STROKE);
@@ -83,32 +89,39 @@ public class SimpleBoundaryDrawable extends Drawable {
         }
     }
 
-    private void drawLeft(Rect bounds) {
+    private void drawLeft(final Rect bounds) {
         final IBoundaryShape shape = mBoundaryShapes[LEFT_BOUNDARY_INDEX];
         mContentPath.reset();
-        mContentPath.moveTo(mShadowPadding[LEFT_BOUNDARY_INDEX], mShadowPadding[TOP_BOUNDARY_INDEX]);
+        mContentPath.moveTo(
+                bounds.left + mShadowPadding[LEFT_BOUNDARY_INDEX],
+                bounds.top + mShadowPadding[TOP_BOUNDARY_INDEX] + getRoundedOffset());
         if (shape == null) {
             mContentPath.lineTo(mShadowPadding[LEFT_BOUNDARY_INDEX], bounds.bottom - mShadowPadding[BOTTOM_BOUNDARY_INDEX]);
         } else {
             final float itemSpace = shape.getSpace();
+            //-1则铺满整个边
             final int quantity = shape.getQuantity() == -1 ?
                     fillBoundaryCount(
                             getDrawHeight(),
                             itemSpace,
                             shape.getHeight())
                     : shape.getQuantity();
+            //调整两边的空隙
             final int adjustSpace = adjustLastSpace(getDrawHeight(), itemSpace, shape.getHeight(), quantity);
+            //能绘制长度
+            final float limitSize = bounds.bottom - mShadowPadding[BOTTOM_BOUNDARY_INDEX] - getRoundedOffset();
             if (shape.getStyle() == IBoundaryShape.Style.ROUND) {
-                float y = itemSpace + mShadowPadding[TOP_BOUNDARY_INDEX];
+                float y = bounds.top + itemSpace + mShadowPadding[TOP_BOUNDARY_INDEX];
                 mContentPath.lineTo(mShadowPadding[LEFT_BOUNDARY_INDEX], y);
                 shape.getBounds().offset(mShadowPadding[LEFT_BOUNDARY_INDEX], mShadowPadding[TOP_BOUNDARY_INDEX]);
                 shape.getBounds().offset(0, itemSpace + shape.getHeight() / 2 + adjustSpace);
                 for (int i = 0; i < quantity; ++i) {
                     mContentPath.arcTo(shape.getBounds(), -90, 180, false);
-                    y = y + shape.getHeight() + itemSpace ;
+                    y = y + shape.getHeight() + itemSpace;
                     shape.getBounds().offset(0, shape.getHeight() + itemSpace);
-                    if (shape.getBounds().bottom >= bounds.bottom - mShadowPadding[BOTTOM_BOUNDARY_INDEX]) {
-                        y = bounds.bottom - mShadowPadding[BOTTOM_BOUNDARY_INDEX];
+
+                    if (shape.getBounds().bottom >= limitSize) {
+                        y = limitSize;
                         mContentPath.lineTo(mShadowPadding[LEFT_BOUNDARY_INDEX], y);
                         return;
                     }
@@ -120,11 +133,14 @@ public class SimpleBoundaryDrawable extends Drawable {
         }
     }
 
-    private void drawBottom(Rect bounds) {
+    private void drawBottom(final Rect bounds) {
         final IBoundaryShape shape = mBoundaryShapes[BOTTOM_BOUNDARY_INDEX];
         if (shape == null) {
+            if (mRounded) {
+                mContentPath.arcTo(getBottomLeft(), -180, -90, false);
+            }
             mContentPath.lineTo(
-                    bounds.right - mShadowPadding[RIGHT_BOUNDARY_INDEX],
+                    bounds.right - mShadowPadding[RIGHT_BOUNDARY_INDEX] - getRoundedOffset(),
                     bounds.bottom - mShadowPadding[BOTTOM_BOUNDARY_INDEX]);
         } else {
             final float itemSpace = shape.getSpace();
@@ -134,10 +150,16 @@ public class SimpleBoundaryDrawable extends Drawable {
                             itemSpace,
                             shape.getWidth())
                     : shape.getQuantity();
-            int adjustSpace = adjustLastSpace(getDrawWidth(), itemSpace, shape.getWidth(), quantity);
+            final int adjustSpace = adjustLastSpace(getDrawWidth(), itemSpace, shape.getWidth(), quantity);
+            final float limitSize = bounds.right - mShadowPadding[RIGHT_BOUNDARY_INDEX] - getRoundedOffset() ;
             if (shape.getStyle() == IBoundaryShape.Style.ROUND) {
-                float x = itemSpace + mShadowPadding[LEFT_BOUNDARY_INDEX];
-                mContentPath.lineTo(x, bounds.bottom - mShadowPadding[BOTTOM_BOUNDARY_INDEX]);
+                float x = itemSpace + mShadowPadding[LEFT_BOUNDARY_INDEX]  + adjustSpace;
+                if (mRounded) {
+                    mContentPath.arcTo(getBottomLeft(), -180, -90, false);
+                } else {
+                    mContentPath.lineTo(
+                            x, bounds.bottom - mShadowPadding[BOTTOM_BOUNDARY_INDEX]);
+                }
                 shape.getBounds().offset(
                         mShadowPadding[LEFT_BOUNDARY_INDEX],
                         bounds.bottom - mShadowPadding[BOTTOM_BOUNDARY_INDEX]);
@@ -146,8 +168,8 @@ public class SimpleBoundaryDrawable extends Drawable {
                     mContentPath.arcTo(shape.getBounds(), -180, 180, false);
                     x = x + shape.getWidth() + itemSpace;
                     shape.getBounds().offset(shape.getWidth() + itemSpace, 0);
-                    if (shape.getBounds().right >= bounds.right - mShadowPadding[RIGHT_BOUNDARY_INDEX]) {
-                        x = bounds.right - mShadowPadding[RIGHT_BOUNDARY_INDEX];
+                    if (shape.getBounds().right >= limitSize) {
+                        x = limitSize;
                         mContentPath.lineTo(x, bounds.bottom - mShadowPadding[BOTTOM_BOUNDARY_INDEX]);
                         break;
                     }
@@ -160,11 +182,16 @@ public class SimpleBoundaryDrawable extends Drawable {
     }
 
 
-    private void drawRight(Rect bounds) {
+    private void drawRight(final Rect bounds) {
         final IBoundaryShape shape = mBoundaryShapes[RIGHT_BOUNDARY_INDEX];
         if (shape == null) {
-            mContentPath.lineTo(bounds.right - mShadowPadding[RIGHT_BOUNDARY_INDEX],
-                    mShadowPadding[TOP_BOUNDARY_INDEX]);
+            if (mRounded) {
+                mContentPath.arcTo(getBottomRight(), -270, -90, false);
+            }
+            mContentPath.lineTo(
+                    bounds.right - mShadowPadding[RIGHT_BOUNDARY_INDEX],
+                    mShadowPadding[TOP_BOUNDARY_INDEX] + getRoundedOffset()
+            );
         } else {
             final float itemSpace = shape.getSpace();
             final int quantity = shape.getQuantity() == -1 ?
@@ -174,17 +201,23 @@ public class SimpleBoundaryDrawable extends Drawable {
                             shape.getHeight())
                     : shape.getQuantity();
             final int adjustSpace = adjustLastSpace(getDrawHeight(), itemSpace, shape.getHeight(), quantity);
+            final float limitSize = mShadowPadding[TOP_BOUNDARY_INDEX] + getRoundedOffset();
             if (shape.getStyle() == IBoundaryShape.Style.ROUND) {
                 float y = bounds.bottom - mShadowPadding[BOTTOM_BOUNDARY_INDEX];
                 shape.getBounds().offset(bounds.right - mShadowPadding[RIGHT_BOUNDARY_INDEX], y);
                 shape.getBounds().offset(0, -itemSpace - shape.getHeight() / 2 - adjustSpace);
                 y = y - itemSpace;
+                if (mRounded) {
+                    mContentPath.arcTo(getBottomRight(), -270, -90, false);
+                } else {
+                    mContentPath.lineTo(bounds.right - mShadowPadding[RIGHT_BOUNDARY_INDEX], y);
+                }
                 for (int i = 0; i < quantity; ++i) {
                     mContentPath.arcTo(shape.getBounds(), -270, 180, false);
                     y = y - shape.getHeight() - itemSpace;
                     shape.getBounds().offset(0, -shape.getHeight() - itemSpace);
-                    if (shape.getBounds().top <= mShadowPadding[TOP_BOUNDARY_INDEX]) {
-                        y = mShadowPadding[TOP_BOUNDARY_INDEX];
+                    if (shape.getBounds().top <= limitSize) {
+                        y = limitSize;
                         mContentPath.lineTo(bounds.right - mShadowPadding[RIGHT_BOUNDARY_INDEX], y);
                         break;
                     }
@@ -196,11 +229,14 @@ public class SimpleBoundaryDrawable extends Drawable {
         }
     }
 
-    private void drawTop(Rect bounds) {
+    private void drawTop(final Rect bounds) {
         final IBoundaryShape shape = mBoundaryShapes[TOP_BOUNDARY_INDEX];
         if (shape == null) {
+            if (mRounded) {
+                mContentPath.arcTo(getTopRight(), 0, -90, false);
+            }
             mContentPath.lineTo(
-                    mShadowPadding[LEFT_BOUNDARY_INDEX],
+                    mShadowPadding[LEFT_BOUNDARY_INDEX] + getRoundedOffset(),
                     mShadowPadding[TOP_BOUNDARY_INDEX]);
         } else {
             final float itemSpace = shape.getSpace();
@@ -211,9 +247,15 @@ public class SimpleBoundaryDrawable extends Drawable {
                             shape.getWidth())
                     : shape.getQuantity();
             final int adjustSpace = adjustLastSpace(getDrawWidth(), itemSpace, shape.getWidth(), quantity);
+            final float limitSize = mShadowPadding[LEFT_BOUNDARY_INDEX] + getRoundedOffset();
             if (shape.getStyle() == IBoundaryShape.Style.ROUND) {
-                float x = bounds.right - mShadowPadding[RIGHT_BOUNDARY_INDEX];
-                mContentPath.lineTo(x, mShadowPadding[TOP_BOUNDARY_INDEX]);
+                float x = bounds.right - mShadowPadding[RIGHT_BOUNDARY_INDEX] - getRoundedOffset();
+                if (mRounded) {
+                    Log.e(TAG, "drawTop: rounded");
+                    mContentPath.arcTo(getTopRight(), 0, -90, false);
+                } else {
+                    mContentPath.lineTo(x, mShadowPadding[TOP_BOUNDARY_INDEX]);
+                }
                 shape.getBounds().offset(x,
                         mShadowPadding[TOP_BOUNDARY_INDEX]);
                 shape.getBounds().offset(-itemSpace - shape.getWidth() / 2 - adjustSpace, 0);
@@ -221,9 +263,12 @@ public class SimpleBoundaryDrawable extends Drawable {
                     mContentPath.arcTo(shape.getBounds(), -360, 180, false);
                     x = x - shape.getWidth() - itemSpace;
                     shape.getBounds().offset(-shape.getWidth() - itemSpace, 0);
-                    if (shape.getBounds().left <= mShadowPadding[LEFT_BOUNDARY_INDEX]) {
-                        x = mShadowPadding[LEFT_BOUNDARY_INDEX];
+                    if (shape.getBounds().left <= limitSize) {
+                        x = limitSize;
                         mContentPath.lineTo(x, mShadowPadding[TOP_BOUNDARY_INDEX]);
+                        if (mRounded) {
+                            mContentPath.arcTo(getTopLeft(), -90, -90, false);
+                        }
                         break;
                     }
                     mContentPath.lineTo(x, mShadowPadding[TOP_BOUNDARY_INDEX]);
@@ -234,12 +279,53 @@ public class SimpleBoundaryDrawable extends Drawable {
         }
     }
 
+    private RectF getBottomLeft() {
+        return new RectF(
+                getBounds().left + mShadowPadding[LEFT_BOUNDARY_INDEX],
+                getBounds().bottom - mShadowPadding[BOTTOM_BOUNDARY_INDEX] - 2 * getRoundedOffset(),
+                getBounds().left + mShadowPadding[LEFT_BOUNDARY_INDEX] + 2 * getRoundedOffset(),
+                getBounds().bottom - mShadowPadding[BOTTOM_BOUNDARY_INDEX]
+        );
+    }
+
+    private RectF getBottomRight() {
+        return new RectF(
+                getBounds().right - mShadowPadding[RIGHT_BOUNDARY_INDEX] - 2 * getRoundedOffset(),
+                getBounds().bottom - mShadowPadding[BOTTOM_BOUNDARY_INDEX] - 2 * getRoundedOffset(),
+                getBounds().right - mShadowPadding[RIGHT_BOUNDARY_INDEX],
+                getBounds().bottom - mShadowPadding[BOTTOM_BOUNDARY_INDEX]
+        );
+    }
+
+    private RectF getTopRight() {
+        return new RectF(
+                getBounds().right - mShadowPadding[RIGHT_BOUNDARY_INDEX] - 2 * getRoundedOffset(),
+                getBounds().top + mShadowPadding[TOP_BOUNDARY_INDEX],
+                getBounds().right - mShadowPadding[RIGHT_BOUNDARY_INDEX],
+                getBounds().top + mShadowPadding[TOP_BOUNDARY_INDEX] + 2 * getRoundedOffset()
+        );
+    }
+
+    private RectF getTopLeft() {
+        return new RectF(
+                getBounds().left + mShadowPadding[LEFT_BOUNDARY_INDEX],
+                getBounds().top + mShadowPadding[TOP_BOUNDARY_INDEX],
+                getBounds().left + mShadowPadding[LEFT_BOUNDARY_INDEX] + 2 * getRoundedOffset(),
+                getBounds().top + mShadowPadding[TOP_BOUNDARY_INDEX] + 2 * getRoundedOffset()
+        );
+    }
+
+    private float getRoundedOffset() {
+        return mRounded ? mRoundedRadius : 0f;
+    }
+
     private int getDrawHeight() {
-        return (int) (getBounds().bottom - mShadowPadding[TOP_BOUNDARY_INDEX] - mShadowPadding[BOTTOM_BOUNDARY_INDEX]);
+        return (int) (getBounds().bottom - mShadowPadding[TOP_BOUNDARY_INDEX] - mShadowPadding[BOTTOM_BOUNDARY_INDEX]
+                - getRoundedOffset());
     }
 
     private int getDrawWidth() {
-        return (int) (getBounds().right - mShadowPadding[LEFT_BOUNDARY_INDEX] - mShadowPadding[RIGHT_BOUNDARY_INDEX]);
+        return (int) (getBounds().right - mShadowPadding[LEFT_BOUNDARY_INDEX] - mShadowPadding[RIGHT_BOUNDARY_INDEX] - getRoundedOffset());
     }
 
     private int fillBoundaryCount(float boundaryWidth, float itemSpace, float itemSize) {
@@ -285,7 +371,8 @@ public class SimpleBoundaryDrawable extends Drawable {
         private int backgroundColor = Color.WHITE;
         private int lineColor = Color.GRAY;
         private float lineWidth = 2f;
-        private boolean hasBoundaryLine, hasShadow;
+        private float roundedRadius = 8;
+        private boolean hasBoundaryLine, hasShadow, hasRounded;
 
         public Builder setBackgroundColor(int color) {
             backgroundColor = color;
@@ -333,6 +420,11 @@ public class SimpleBoundaryDrawable extends Drawable {
             return this;
         }
 
+        public Builder setRoundedRadius(float radius) {
+            roundedRadius = radius;
+            return this;
+        }
+
         public Builder setShadowEnable(boolean enable) {
             hasShadow = enable;
             return this;
@@ -340,6 +432,11 @@ public class SimpleBoundaryDrawable extends Drawable {
 
         public Builder setBoundaryEnable(boolean enable) {
             hasBoundaryLine = enable;
+            return this;
+        }
+
+        public Builder setRoundedEnable(boolean enable) {
+            hasRounded = enable;
             return this;
         }
 

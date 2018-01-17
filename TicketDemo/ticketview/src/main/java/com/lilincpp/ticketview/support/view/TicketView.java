@@ -5,8 +5,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 import android.widget.FrameLayout;
 
+import com.lilincpp.ticketview.ICustomShape;
 import com.lilincpp.ticketview.support.drawable.SimpleBoundaryDrawable;
 import com.lilincpp.ticketview.support.shape.SimpleBoundaryShape;
 
@@ -35,14 +37,15 @@ public class TicketView extends FrameLayout {
         SimpleBoundaryDrawable.Builder builder = new SimpleBoundaryDrawable.Builder();
         builder.setBoundaryShape(
                 new SimpleBoundaryShape(),
-                null,
                 new SimpleBoundaryShape(),
-                null
+                new SimpleBoundaryShape(),
+                new SimpleBoundaryShape()
         );
         builder.setBackgroundColor(Color.WHITE);
         builder.setShadowPx(16);
-        builder.setShadowEnable(false);
+        builder.setShadowEnable(true);
         builder.setBoundaryEnable(true);
+        builder.setRoundedEnable(true);
         setBackground(builder.create());
     }
 
@@ -51,6 +54,10 @@ public class TicketView extends FrameLayout {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Log.e(TAG, "onDraw: ");
+        for (int i = 0; i < getChildCount(); ++i) {
+            if (getChildAt(i) instanceof ICustomShape) {
+                ((ICustomShape) getChildAt(i)).drawCustom(canvas);
+            }
+        }
     }
 }

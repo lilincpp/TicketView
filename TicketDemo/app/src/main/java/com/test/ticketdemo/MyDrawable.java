@@ -52,14 +52,27 @@ public class MyDrawable extends Drawable {
                 20 + 32 + offset);
         mPath.arcTo(rectF
                 , -90, 180, false);
-        mPath.lineTo(offset, bounds.bottom - offset);
-        mPath.lineTo(offset + 20, bounds.bottom - offset);
-        RectF rectF1 = new RectF(offset + 20, bounds.bottom - offset - 32 / 2, offset + 20 + 32, bounds.bottom - offset + 32 / 2);
+        int radius = 10;
+        RectF coner = new RectF(offset, bounds.bottom - offset - 2 * radius, offset + 2 * radius, bounds.bottom - offset);
+        mPath.arcTo(coner, -180, -90, false);
+        //        mPath.lineTo(offset, bounds.bottom - offset - radius);
+        mPath.lineTo(offset + 60, bounds.bottom - offset);
+        RectF rectF1 = new RectF(offset + 60, bounds.bottom - offset - 32 / 2, offset + 60 + 32, bounds.bottom - offset + 32 / 2);
         mPath.arcTo(
                 rectF1, -180, 180, false
         );
         mPath.lineTo(bounds.right - offset, bounds.bottom - offset);
         mPath.lineTo(bounds.right - offset, bounds.top + offset);
+        mPath.lineTo(offset + 2 * radius, bounds.top + offset);
+        mPath.arcTo(
+                offset,
+                offset,
+                offset + 2 * radius,
+                offset + 2 * radius,
+                -90,
+                -90,
+                false
+        );
         mPath.close();
 
     }
@@ -70,7 +83,7 @@ public class MyDrawable extends Drawable {
         Log.e(TAG, "draw: ");
         canvas.drawPath(mPath, mPaint);
 //        canvas.drawPath(mPath, mPaint);
-//        canvas.drawPath(mPath, mPaint2);
+        canvas.drawPath(mPath, mPaint2);
 //        mPaint.setStyle(Paint.Style.STROKE);
 //        canvas.drawPath(mPath, mPaint);
     }
