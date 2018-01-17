@@ -31,7 +31,7 @@
         app:boundary_bottomItemQuantity="1"
         app:boundary_hasStroke="true"
         app:boundary_strokeWidth="1dp"
-        app:boundary_roundCorner="2dp"
+        app:boundary_roundCorner="4dp"
         >
 
 
