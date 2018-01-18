@@ -223,6 +223,7 @@ public class SimpleBoundaryDrawable extends Drawable {
         if (shape == null) {
             if (mRounded) {
                 mContentPath.arcTo(getTopRightCorner(), 0, -90, false);
+                mContentPath.arcTo(getTopLeftCorner(), -90, -90, false);
             }
             mContentPath.lineTo(
                     mShadowPadding[LEFT_BOUNDARY_INDEX] + getRoundedOffset(),
