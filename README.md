@@ -1,14 +1,12 @@
 # TicketView
-通过简单配置，合成常见的票、卷样式。
+[ ![download](https://api.bintray.com/packages/lilincpp/android/ticketview/images/download.svg) ](https://bintray.com/lilincpp/android/ticketview/_latestVersion)
 
-### 原理
-通过继承`Drawable`及利用`Xfermode`来达到相关效果。
+TicketView可以让你通过`XML`及`Java`快速实现市面上主流卷、票的样式。
+
 
 ### 效果展示
 ![](https://github.com/lilincpp/TicketView/blob/master/picture/demo_effect.png)
 
-### 注意事项
-如果是在`XML`中配置，必须要设置`android:background`属性。
 
 ## 配置
 
@@ -17,14 +15,14 @@
 <dependency>
   <groupId>com.github.lilincpp</groupId>
   <artifactId>ticketview</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <type>pom</type>
 </dependency>
 ```
 
 2. android
 ```
-compile 'com.github.lilincpp:ticketview:1.0.0'
+compile 'com.github.lilincpp:ticketview:1.0.2'
 ```
 
 ### 未来计划
