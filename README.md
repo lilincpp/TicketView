@@ -5,7 +5,7 @@ TicketView可以让你通过`XML`及`Java`快速实现市面上主流卷、票�
 
 
 ### 效果展示
-![](https://github.com/lilincpp/TicketView/blob/master/picture/demo.png)
+![](https://github.com/lilincpp/TicketView/blob/master/picture/demo_effect.png)
 
 
 ## 配置
