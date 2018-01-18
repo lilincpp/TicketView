@@ -26,7 +26,7 @@
     </LinearLayout>
 
     <TextView
-        android:text="XML控制，形状+阴影+描边"
+        android:text="XML控制，形状+圆角+阴影+描边"
         android:paddingLeft="16dp"
         android:layout_marginTop="16dp"
         android:layout_width="wrap_content"
