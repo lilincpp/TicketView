@@ -1,42 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:background="@drawable/ic_launcher_background"
-              tools:context="com.test.ticketdemo.MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF"
+    android:orientation="vertical"
+    tools:context="com.test.ticketdemo.MainActivity">
 
 
+    <TextView
+        android:text="Java代码控制，形状+阴影"
+        android:paddingLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
-        android:layout_margin="16dp"
         android:id="@+id/ll_two"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:background="@color/colorPrimaryDark"
-        android:layout_height="100dp">
+        android:layout_height="100dp"
+        android:layout_margin="16dp"
+        android:orientation="vertical">
 
     </LinearLayout>
 
+    <TextView
+        android:text="XML控制，形状+阴影+描边"
+        android:paddingLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <com.lilincpp.ticketview.support.view.TicketView
-        android:layout_margin="16dp"
         android:layout_width="match_parent"
         android:layout_height="160dp"
-        app:boundary_show="left|right|top|bottom"
-        app:boundary_topItemQuantity="1"
-        app:boundary_topRadius="24dp"
-        app:boundary_bottomRadius="24dp"
+        android:layout_margin="16dp"
         app:boundary_bottomItemQuantity="1"
+        app:boundary_bottomRadius="24dp"
         app:boundary_hasStroke="true"
-        app:boundary_strokeWidth="1dp"
         app:boundary_roundCorner="4dp"
-        >
+        app:boundary_shadowPx="8dp"
+        app:boundary_show="left|right|top|bottom"
+        app:boundary_strokeWidth="1dp"
+        app:boundary_topItemQuantity="1"
+        app:boundary_topRadius="24dp">
+
+        <com.lilincpp.ticketview.support.view.SimpleTicketDividingLine
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:line_color="@color/colorAccent"
+            app:line_drawWeight="0.8"
+            app:line_paddingTop="8dp"
+            app:line_paddingBottom="8dp"
+            app:line_gravity="vertical" />
+
+        <com.lilincpp.ticketview.support.view.SimpleTicketDividingLine
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:line_color="@color/colorAccent"
+            app:line_drawWeight="0.7"
+            app:line_paddingTop="8dp"
+            app:line_paddingBottom="8dp"
+            app:line_gravity="vertical" />
 
 
     </com.lilincpp.ticketview.support.view.TicketView>
-
 
 
 </LinearLayout>

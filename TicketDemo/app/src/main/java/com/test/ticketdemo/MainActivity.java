@@ -44,43 +44,11 @@ public class MainActivity extends AppCompatActivity {
                 new SimpleBoundaryShape(),
                 new SimpleBoundaryShape()
         );
-        two.setBackground(new MyDrawable());
+        builder.setShadowPx(16);
+        two.setBackground(builder.create());
 
     }
 
-    private Drawable buildBackground() {
-        return new ShapeDrawable(new RectShape() {
-            @Override
-            public void draw(Canvas canvas, Paint paint) {
-                paint.setColor(Color.WHITE);
-                paint.setStyle(Paint.Style.FILL);
-                canvas.drawPath(buildConvexPath(), paint);
-            }
-
-            @Override
-            public void getOutline(Outline outline) {
-                outline.setConvexPath(buildConvexPath());
-            }
-
-            private Path buildConvexPath() {
-//                Path path = new Path();
-//                path.lineTo(rect().left, rect().top);
-//                path.lineTo(rect().right, rect().top);
-//                path.lineTo(rect().left, rect().bottom);
-//                path.close();
-
-                Path path = new Path();
-                path.moveTo(rect().left,rect().top);
-                path.lineTo(rect().left,50);
-//                path.arcTo(rect().left,50,50,100,0,120,false);
-                path.lineTo(rect().left,rect().bottom);
-                path.lineTo(rect().right,rect().bottom);
-                path.lineTo(rect().left,rect().top);
-                path.close();
-                return path;
-            }
-        });
-    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {

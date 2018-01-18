@@ -5,7 +5,7 @@
 通过继承`Drawable`及利用`Xfermode`来达到相关效果。
 
 ### 效果展示
-![](https://github.com/lilincpp/TicketView/blob/master/picture/demo_effect.png)
+![](https://github.com/lilincpp/TicketView/blob/master/picture/demo.png)
 
 ### 注意事项
 如果是在`XML`中配置，必须要设置`android:background`属性。
