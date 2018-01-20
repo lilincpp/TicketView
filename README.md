@@ -15,14 +15,14 @@ TicketView可以让你通过`XML`及`Java`快速实现市面上主流卷、票�
 <dependency>
   <groupId>com.github.lilincpp</groupId>
   <artifactId>ticketview</artifactId>
-  <version>1.0.2</version>
+  <version>lastVersion</version>
   <type>pom</type>
 </dependency>
 ```
 
 2. android
 ```
-compile 'com.github.lilincpp:ticketview:1.0.2'
+compile 'com.github.lilincpp:ticketview:lastVersion'
 ```
 
 ### 未来计划
