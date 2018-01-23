@@ -106,15 +106,19 @@ public class SimpleBoundaryDrawable extends Drawable {
                             shape.getHeight())
                     : shape.getQuantity();
             //调整两边的空隙
-            final int adjustSpace = adjustLastSpace(getDrawHeight(), itemSpace, shape.getHeight(), quantity);
+            int adjustSpace = adjustLastSpace(getDrawHeight(), itemSpace, shape.getHeight(), quantity);
             //能绘制长度
             final float limitSize = bounds.bottom - mShadowPadding[BOTTOM_BOUNDARY_INDEX] - getRoundedOffset();
+            final float startDrawSpace = getLeftStartDrawOffset();
+            if (startDrawSpace != 0) {
+                adjustSpace = 0;
+            }
             if (shape.getStyle() == IBoundaryShape.Style.ROUND) {
                 mContentPath.lineTo(
                         mShadowPadding[LEFT_BOUNDARY_INDEX],
-                        bounds.top + itemSpace + mShadowPadding[TOP_BOUNDARY_INDEX] + getLeftStartDrawOffset());
+                        bounds.top + itemSpace + mShadowPadding[TOP_BOUNDARY_INDEX] + startDrawSpace);
                 shape.getBounds().offset(mShadowPadding[LEFT_BOUNDARY_INDEX], mShadowPadding[TOP_BOUNDARY_INDEX]);
-                shape.getBounds().offset(0, itemSpace + shape.getHeight() / 2 + adjustSpace + getLeftStartDrawOffset());
+                shape.getBounds().offset(0, itemSpace + shape.getHeight() / 2 + adjustSpace + startDrawSpace);
                 for (int i = 0; i < quantity; ++i) {
                     mContentPath.arcTo(shape.getBounds(), -90, 180, false);
                     shape.getBounds().offset(0, shape.getHeight() + itemSpace);
@@ -147,8 +151,12 @@ public class SimpleBoundaryDrawable extends Drawable {
                             itemSpace,
                             shape.getWidth())
                     : shape.getQuantity();
-            final int adjustSpace = adjustLastSpace(getDrawWidth(), itemSpace, shape.getWidth(), quantity);
+            int adjustSpace = adjustLastSpace(getDrawWidth(), itemSpace, shape.getWidth(), quantity);
             final float limitSize = bounds.right - mShadowPadding[RIGHT_BOUNDARY_INDEX] - getRoundedOffset();
+            final float startDrawSpace = getBottomStartDrawOffset();
+            if (startDrawSpace != 0) {
+                adjustSpace = 0;
+            }
             if (shape.getStyle() == IBoundaryShape.Style.ROUND) {
                 if (mRounded) {
                     mContentPath.arcTo(getBottomLeftCorner(), -180, -90, false);
@@ -156,7 +164,7 @@ public class SimpleBoundaryDrawable extends Drawable {
                 shape.getBounds().offset(
                         mShadowPadding[LEFT_BOUNDARY_INDEX],
                         bounds.bottom - mShadowPadding[BOTTOM_BOUNDARY_INDEX]);
-                shape.getBounds().offset(itemSpace + shape.getWidth() / 2 + adjustSpace + getBottomStartDrawOffset(), 0);
+                shape.getBounds().offset(itemSpace + shape.getWidth() / 2 + adjustSpace + startDrawSpace, 0);
                 for (int i = 0; i < quantity; ++i) {
                     mContentPath.arcTo(shape.getBounds(), -180, 180, false);
                     shape.getBounds().offset(shape.getWidth() + itemSpace, 0);
@@ -194,13 +202,17 @@ public class SimpleBoundaryDrawable extends Drawable {
                             itemSpace,
                             shape.getHeight())
                     : shape.getQuantity();
-            final int adjustSpace = adjustLastSpace(getDrawHeight(), itemSpace, shape.getHeight(), quantity);
+            int adjustSpace = adjustLastSpace(getDrawHeight(), itemSpace, shape.getHeight(), quantity);
             final float limitSize = mShadowPadding[TOP_BOUNDARY_INDEX] + getRoundedOffset();
+            final float startDrawSpace = getRightStartDrawOffset();
+            if (startDrawSpace != 0) {
+                adjustSpace = 0;
+            }
             if (shape.getStyle() == IBoundaryShape.Style.ROUND) {
                 shape.getBounds().offset(
                         bounds.right - mShadowPadding[RIGHT_BOUNDARY_INDEX],
                         bounds.bottom - mShadowPadding[BOTTOM_BOUNDARY_INDEX]);
-                shape.getBounds().offset(0, -itemSpace - shape.getHeight() / 2 - adjustSpace - getRightStartDrawOffset());
+                shape.getBounds().offset(0, -itemSpace - shape.getHeight() / 2 - adjustSpace - startDrawSpace);
                 if (mRounded) {
                     mContentPath.arcTo(getBottomRightCorner(), -270, -90, false);
                 }
@@ -236,16 +248,23 @@ public class SimpleBoundaryDrawable extends Drawable {
                             itemSpace,
                             shape.getWidth())
                     : shape.getQuantity();
-            final int adjustSpace = adjustLastSpace(getDrawWidth(), itemSpace, shape.getWidth(), quantity);
+            int adjustSpace = adjustLastSpace(getDrawWidth(), itemSpace, shape.getWidth(), quantity);
             final float limitSize = mShadowPadding[LEFT_BOUNDARY_INDEX] + getRoundedOffset();
+            final float startDrawSpace = getTopStartDrawOffset();
+            if (startDrawSpace != 0) {
+                adjustSpace = 0;
+            }
+            Log.e(TAG, "drawTop: adjustSpace=" + adjustSpace);
+            Log.e(TAG, "drawTop: startDrawSpace=" + startDrawSpace);
+            Log.e(TAG, "drawTop: "+(mBoundaryShapes[TOP_BOUNDARY_INDEX].getStartDrawPositionWeight() == 0) );
             if (shape.getStyle() == IBoundaryShape.Style.ROUND) {
                 if (mRounded) {
                     mContentPath.arcTo(getTopRightCorner(), 0, -90, false);
                 }
                 shape.getBounds().offset(
-                        bounds.right - mShadowPadding[RIGHT_BOUNDARY_INDEX] - getRoundedOffset() - getTopStartDrawOffset(),
+                        bounds.right - mShadowPadding[RIGHT_BOUNDARY_INDEX] - getRoundedOffset() - startDrawSpace,
                         mShadowPadding[TOP_BOUNDARY_INDEX]);
-                shape.getBounds().offset(-itemSpace - shape.getWidth() / 2 - adjustSpace - getTopStartDrawOffset(), 0);
+                shape.getBounds().offset(-itemSpace - shape.getWidth() / 2 - adjustSpace - startDrawSpace, 0);
                 for (int i = 0; i < quantity; ++i) {
                     mContentPath.arcTo(shape.getBounds(), -360, 180, false);
                     shape.getBounds().offset(-shape.getWidth() - itemSpace, 0);

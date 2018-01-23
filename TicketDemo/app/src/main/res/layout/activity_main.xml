@@ -43,6 +43,7 @@
         app:boundary_show="left|right|top|bottom"
         app:boundary_strokeWidth="1dp"
         app:boundary_topItemQuantity="1"
+        app:boundary_topDrawWeight="0.21"
         app:boundary_topRadius="24dp">
 
         <com.lilincpp.ticketview.support.view.SimpleTicketDividingLine
@@ -62,6 +63,21 @@
             app:line_paddingTop="8dp"
             app:line_paddingBottom="8dp"
             app:line_gravity="vertical" />
+
+
+    </com.lilincpp.ticketview.support.view.TicketView>
+
+
+    <com.lilincpp.ticketview.support.view.TicketView
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_margin="16dp"
+        app:boundary_hasStroke="true"
+        app:boundary_shadowPx="1dp"
+        app:boundary_roundCorner="4dp"
+        app:boundary_show="left|right"
+        app:boundary_strokeWidth="1dp"
+>
 
 
     </com.lilincpp.ticketview.support.view.TicketView>

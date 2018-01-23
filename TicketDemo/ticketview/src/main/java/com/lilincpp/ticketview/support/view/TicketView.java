@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.FrameLayout;
 
 import com.lilincpp.ticketview.ICustomShape;
@@ -87,12 +88,13 @@ public class TicketView extends FrameLayout {
                 final int radius = a.getDimensionPixelSize(
                         R.styleable.TicketView_boundary_topRadius, SimpleBoundaryShape.DEFAULT_ITEM_RADIUS);
                 final float startWeight = a.getFloat(
-                        R.styleable.TicketView_boundary_leftDrawWeight, 0f);
+                        R.styleable.TicketView_boundary_topDrawWeight, 0f);
                 SimpleBoundaryShape shape = new SimpleBoundaryShape();
                 shape.setItemCount(quantity);
                 shape.setItemSpace(itemSpace);
                 shape.setRadius(radius);
                 shape.setStartDrawPositionWeight(startWeight);
+                Log.e(TAG, "initView: "+shape.getStartDrawPositionWeight() );
                 builder.setTopBoundaryShape(shape);
             }
 
@@ -105,7 +107,7 @@ public class TicketView extends FrameLayout {
                 final int radius = a.getDimensionPixelSize(
                         R.styleable.TicketView_boundary_bottomRadius, SimpleBoundaryShape.DEFAULT_ITEM_RADIUS);
                 final float startWeight = a.getFloat(
-                        R.styleable.TicketView_boundary_leftDrawWeight, 0f);
+                        R.styleable.TicketView_boundary_bottomDrawWeight, 0f);
                 SimpleBoundaryShape shape = new SimpleBoundaryShape();
                 shape.setItemCount(quantity);
                 shape.setItemSpace(itemSpace);
