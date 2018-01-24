@@ -17,12 +17,16 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.lilincpp.ticketview.support.drawable.SimpleBoundaryDrawable;
 import com.lilincpp.ticketview.support.shape.SimpleBoundaryShape;
+import com.lilincpp.ticketview.support.view.TicketView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 //        two.setBackground(builder.create());
 //        two.setElevation(8f);
 
-        two.setLayerType(View.LAYER_TYPE_SOFTWARE,null);
+        two.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         SimpleBoundaryDrawable.Builder builder = new SimpleBoundaryDrawable.Builder();
         builder.setBoundaryShape(
                 new SimpleBoundaryShape(),
@@ -48,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         two.setBackground(builder.create());
 
     }
+
+    private static final String TAG = "MainActivity";
 
 
     @Override

@@ -20,6 +20,8 @@
         <attr name="line_width" format="dimension" />
         <!--虚线的间距-->
         <attr name="line_gap" format="dimension" />
+        <!--固定虚线的位置-->
+        <attr name="line_noChange" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="TicketView">

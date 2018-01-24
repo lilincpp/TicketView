@@ -32,8 +32,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <com.lilincpp.ticketview.support.view.TicketView
+        android:id="@+id/ticketview"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"
         app:boundary_bottomItemQuantity="1"
         app:boundary_bottomRadius="24dp"
@@ -50,19 +51,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:line_color="@color/colorAccent"
-            app:line_drawWeight="0.8"
+            app:line_drawWeight="0.5"
             app:line_paddingTop="8dp"
             app:line_paddingBottom="8dp"
-            app:line_gravity="vertical" />
+            app:line_noChange="true"
+            app:line_gravity="horizontal" />
 
-        <com.lilincpp.ticketview.support.view.SimpleTicketDividingLine
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:line_color="@color/colorAccent"
-            app:line_drawWeight="0.7"
-            app:line_paddingTop="8dp"
-            app:line_paddingBottom="8dp"
-            app:line_gravity="vertical" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_add"
+            android:padding="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        </LinearLayout>
 
 
     </com.lilincpp.ticketview.support.view.TicketView>

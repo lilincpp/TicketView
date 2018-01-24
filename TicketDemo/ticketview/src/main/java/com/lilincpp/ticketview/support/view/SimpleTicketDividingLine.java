@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -36,6 +37,9 @@ public class SimpleTicketDividingLine extends View implements ICustomShape {
     private Paint mPaint;
     private Path mPath;
 
+    private boolean mNoChanged = false;
+    private float mTopDistance = -1, mLeftDistance = -1;
+
     public SimpleTicketDividingLine(Context context) {
         super(context);
         initView(context, null);
@@ -58,6 +62,8 @@ public class SimpleTicketDividingLine extends View implements ICustomShape {
             mLineGravity = array.getInt(R.styleable.SimpleTicketDividingLine_line_gravity, HORIZONTAL);
             mLineColor = array.getInt(R.styleable.SimpleTicketDividingLine_line_color, Color.WHITE);
             mLineWeight = array.getFloat(R.styleable.SimpleTicketDividingLine_line_drawWeight, 0f);
+            mNoChanged = array.getBoolean(R.styleable.SimpleTicketDividingLine_line_noChange, false);
+            Log.e(TAG, "initView: " + mNoChanged);
             int padding = array.getDimensionPixelSize(R.styleable.SimpleTicketDividingLine_line_padding, 0);
             int paddingLeft = array.getDimensionPixelSize(R.styleable.SimpleTicketDividingLine_line_paddingLeft, 0);
             int paddingTop = array.getDimensionPixelSize(R.styleable.SimpleTicketDividingLine_line_paddingTop, 0);
@@ -89,12 +95,32 @@ public class SimpleTicketDividingLine extends View implements ICustomShape {
     @Override
     public void drawCustom(Canvas canvas) {
         mPath.reset();
+
         if (mLineGravity == HORIZONTAL) {
-            mPath.moveTo(mLinePadding.left, mLineWeight * canvas.getHeight());
-            mPath.lineTo(canvas.getWidth() - mLinePadding.right, mLineWeight * canvas.getHeight());
+            if (mNoChanged) {
+                Log.e(TAG, "drawCustom: add");
+                if (mTopDistance == -1) {
+                    mTopDistance = mLineWeight * canvas.getHeight();
+                }
+            } else {
+                mTopDistance = -1;
+            }
+            Log.e(TAG, "drawCustom:mTopDistance= " + mTopDistance);
+            float y = mNoChanged ? mTopDistance : mLineWeight * canvas.getHeight();
+            Log.e(TAG, "drawCustom:y= " + y);
+            mPath.moveTo(mLinePadding.left, y);
+            mPath.lineTo(canvas.getWidth() - mLinePadding.right, y);
         } else {
-            mPath.moveTo(mLineWeight * canvas.getWidth(), mLinePadding.top);
-            mPath.lineTo(mLineWeight * canvas.getWidth(), canvas.getHeight() - mLinePadding.bottom);
+            if (mNoChanged) {
+                if (mLeftDistance == -1) {
+                    mLeftDistance = mLineWeight * canvas.getWidth();
+                }
+            } else {
+                mLeftDistance = -1;
+            }
+            float x = mNoChanged ? mLeftDistance : mLineWeight * canvas.getWidth();
+            mPath.moveTo(x, mLinePadding.top);
+            mPath.lineTo(x, canvas.getHeight() - mLinePadding.bottom);
         }
         canvas.drawPath(mPath, mPaint);
     }

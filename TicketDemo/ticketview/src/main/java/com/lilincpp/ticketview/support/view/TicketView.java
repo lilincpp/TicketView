@@ -94,7 +94,7 @@ public class TicketView extends FrameLayout {
                 shape.setItemSpace(itemSpace);
                 shape.setRadius(radius);
                 shape.setStartDrawPositionWeight(startWeight);
-                Log.e(TAG, "initView: "+shape.getStartDrawPositionWeight() );
+                Log.e(TAG, "initView: " + shape.getStartDrawPositionWeight());
                 builder.setTopBoundaryShape(shape);
             }
 
@@ -137,10 +137,29 @@ public class TicketView extends FrameLayout {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        Log.e(TAG, "onDraw: " );
         for (int i = 0; i < getChildCount(); ++i) {
             if (getChildAt(i) instanceof ICustomShape) {
                 ((ICustomShape) getChildAt(i)).drawCustom(canvas);
             }
         }
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        Log.e(TAG, "onMeasure: " );
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        Log.e(TAG, "onLayout: " );
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        Log.e(TAG, "onSizeChanged: " );
     }
 }
