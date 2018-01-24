@@ -63,7 +63,6 @@ public class SimpleTicketDividingLine extends View implements ICustomShape {
             mLineColor = array.getInt(R.styleable.SimpleTicketDividingLine_line_color, Color.WHITE);
             mLineWeight = array.getFloat(R.styleable.SimpleTicketDividingLine_line_drawWeight, 0f);
             mNoChanged = array.getBoolean(R.styleable.SimpleTicketDividingLine_line_noChange, false);
-            Log.e(TAG, "initView: " + mNoChanged);
             int padding = array.getDimensionPixelSize(R.styleable.SimpleTicketDividingLine_line_padding, 0);
             int paddingLeft = array.getDimensionPixelSize(R.styleable.SimpleTicketDividingLine_line_paddingLeft, 0);
             int paddingTop = array.getDimensionPixelSize(R.styleable.SimpleTicketDividingLine_line_paddingTop, 0);
@@ -98,16 +97,13 @@ public class SimpleTicketDividingLine extends View implements ICustomShape {
 
         if (mLineGravity == HORIZONTAL) {
             if (mNoChanged) {
-                Log.e(TAG, "drawCustom: add");
                 if (mTopDistance == -1) {
                     mTopDistance = mLineWeight * canvas.getHeight();
                 }
             } else {
                 mTopDistance = -1;
             }
-            Log.e(TAG, "drawCustom:mTopDistance= " + mTopDistance);
             float y = mNoChanged ? mTopDistance : mLineWeight * canvas.getHeight();
-            Log.e(TAG, "drawCustom:y= " + y);
             mPath.moveTo(mLinePadding.left, y);
             mPath.lineTo(canvas.getWidth() - mLinePadding.right, y);
         } else {

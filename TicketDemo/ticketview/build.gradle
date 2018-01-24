@@ -6,7 +6,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 //地址组成:
 //[groupId]:[artifactId]:[version]
 group = 'com.github.lilincpp' //groupId
-version = '1.0.5' //版本号
+version = '1.0.6' //版本号
 
 android {
     compileSdkVersion 26
@@ -16,8 +16,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 6
-        versionName "1.0.5"
+        versionCode 7
+        versionName "1.0.6"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -68,9 +68,9 @@ bintray {
         name = 'ticketview' //JCenter的项目名字
 
         version {
-            name = '1.0.5'
+            name = '1.0.6'
             desc = "Custom Ticket View for Android."
-            vcsTag = '1.0.5'
+            vcsTag = '1.0.6'
         }
 
         licenses = ['Apache-2.0']
