@@ -254,9 +254,6 @@ public class SimpleBoundaryDrawable extends Drawable {
             if (startDrawSpace != 0) {
                 adjustSpace = 0;
             }
-            Log.e(TAG, "drawTop: adjustSpace=" + adjustSpace);
-            Log.e(TAG, "drawTop: startDrawSpace=" + startDrawSpace);
-            Log.e(TAG, "drawTop: "+(mBoundaryShapes[TOP_BOUNDARY_INDEX].getStartDrawPositionWeight() == 0) );
             if (shape.getStyle() == IBoundaryShape.Style.ROUND) {
                 if (mRounded) {
                     mContentPath.arcTo(getTopRightCorner(), 0, -90, false);
