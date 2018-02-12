@@ -8,14 +8,14 @@ TicketView可以让你通过`XML`及`Java`快速实现市面上主流卷、票�
 ![](https://github.com/lilincpp/TicketView/blob/master/picture/demo_effect.png)
 
 
-## 配置
+### 配置
 
 1. gradle
 ```
 <dependency>
   <groupId>com.github.lilincpp</groupId>
   <artifactId>ticketview</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.6</version>
   <type>pom</type>
 </dependency>
 ```
@@ -27,6 +27,7 @@ compile 'com.github.lilincpp:ticketview:1.0.3'
 
 ### 未来计划
 
+- [ ] 重构代码
 - [ ] 更多修饰形状的实现
 - [x] 实现圆角
 - [x] 边缘描边
