@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 //        two.setBackground(builder.create());
 //        two.setElevation(8f);
 
-        two.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+       // two.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         SimpleBoundaryDrawable.Builder builder = new SimpleBoundaryDrawable.Builder();
         builder.setBoundaryShape(
                 new SimpleBoundaryShape(),
