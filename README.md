@@ -41,3 +41,4 @@ compile 'com.github.lilincpp:ticketview:1.0.6'
 
 TicketView binaries and source code can be used according to the [Apache License, Version 2.0](https://github.com/lilincpp/TicketView/blob/master/LICENSE).
 
+
