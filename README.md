@@ -22,8 +22,6 @@ TicketView可以让你通过`XML`及`Java`快速实现市面上主流卷、票�
 
 2. android
 
-请参见上面最新版本
-
 ```
 compile 'com.github.lilincpp:ticketview:1.0.6'
 ```
