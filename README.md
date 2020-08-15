@@ -38,7 +38,7 @@ compile 'com.github.lilincpp:ticketview:1.0.6'
 - [x] 绘制形状与背景相交后，使得背景透明
 - [x] 可以给任何View使用
 
-### License
+## License
 
 TicketView binaries and source code can be used according to the [Apache License, Version 2.0](https://github.com/lilincpp/TicketView/blob/master/LICENSE).
 
